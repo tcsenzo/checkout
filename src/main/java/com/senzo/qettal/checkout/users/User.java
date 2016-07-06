@@ -41,6 +41,14 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	public String getName() {
+		return name;
+	}
 	
 	public Optional<User> save(Users users) {
 		return Optional.of(users.save(this));
