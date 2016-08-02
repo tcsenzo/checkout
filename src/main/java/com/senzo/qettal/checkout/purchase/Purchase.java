@@ -64,5 +64,9 @@ public class Purchase {
 	public String getReferenceId() {
 		return referenceId;
 	}
+
+	public boolean isOwnedBy(User user) {
+		return owner.equals(user);
+	}
 	
 }

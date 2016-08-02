@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moip.API;
-import br.com.moip.Client;
-import br.com.moip.authentication.Authentication;
-import br.com.moip.authentication.BasicAuth;
 import br.com.moip.request.CustomerRequest;
 import br.com.moip.request.OrderRequest;
 import br.com.moip.resource.Order;
@@ -32,15 +29,14 @@ public class PurchaseController {
 	private Purchases purchases;
 	@Autowired
 	private LoggedUser loggedUser;
+	@Autowired
+	private API api;
 
 	@RequestMapping(method = POST)
 	public Order create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
 		Purchase purchase = purchaseConverter.convert(purchaseDTO);
 		purchases.save(purchase);
 
-		Authentication auth = new BasicAuth("VXOMXSU28LXTVDG1V1L8ZLFAJX10PQYT", "ABEFG291RV8LR49QQAEAYFRYHFAY61CEFFZZGHBD");
-		Client client = new Client(Client.SANDBOX, auth);
-		API api = new API(client);
 		OrderRequest orderRequest = new OrderRequest()
 	        .ownId(purchase.getId().toString());
 	

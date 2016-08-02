@@ -1,18 +1,22 @@
 package com.senzo.qettal.checkout.payment;
 
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moip.API;
-import br.com.moip.Client;
-import br.com.moip.authentication.Authentication;
-import br.com.moip.authentication.BasicAuth;
 import br.com.moip.request.CreditCardRequest;
 import br.com.moip.request.FundingInstrumentRequest;
 import br.com.moip.request.HolderRequest;
@@ -33,40 +37,36 @@ public class PaymentsController {
 	private LoggedUser loggedUser;
 	@Autowired
 	private Purchases purchases;
+	@Autowired
+	private API api;
 	
-
 	@RequestMapping(method = POST)
-	public Payment create(@Valid @RequestBody PaymentDTO paymentDTO) {
-		Purchase purchase = purchases.find(paymentDTO.getPurchaseId());
-		
-		Authentication auth = new BasicAuth("VXOMXSU28LXTVDG1V1L8ZLFAJX10PQYT", "ABEFG291RV8LR49QQAEAYFRYHFAY61CEFFZZGHBD");
-		Client client = new Client(Client.SANDBOX, auth);
-		API api = new API(client);
+	public ResponseEntity<Payment> create(@Valid @RequestBody PaymentDTO paymentDTO) {
+		Optional<Purchase> optionalPurchase = purchases.find(paymentDTO.getPurchaseId());
+		if(!optionalPurchase.isPresent())
+			return new ResponseEntity<>(NOT_FOUND);
 
+		Purchase purchase = optionalPurchase.get();
+		if(!purchase.isOwnedBy(loggedUser.getUser().get()))
+			return new ResponseEntity<>(FORBIDDEN);
+		
 		HolderRequest holderRequest = new HolderRequest()
 		        .fullname(paymentDTO.getFullName())
 		        .birthdate(paymentDTO.getBirthDate())
-		        .phone(
-		                new PhoneRequest()
+		        .phone(new PhoneRequest()
 		                        .setAreaCode(paymentDTO.getPhoneAreaCode())
-		                        .setNumber(paymentDTO.getPhone())
-		        )
-		        .taxDocument(TaxDocumentRequest.cpf(paymentDTO.getCPF()));
+		                        .setNumber(paymentDTO.getPhone()))
+		        .taxDocument(TaxDocumentRequest.cpf(paymentDTO.getCpf()));
 		
 		CreditCardRequest creditCardRequest = new CreditCardRequest()
 		        .hash(paymentDTO.getCreditCardHash())
-		        .holder(
-		                holderRequest
-		        );
+		        .holder(holderRequest);
 		
 		PaymentRequest paymentRequest = new PaymentRequest()
 		        .orderId(purchase.getReferenceId())
 		        .installmentCount(1)
-		        .fundingInstrument(
-		                new FundingInstrumentRequest()
-		                        .creditCard(creditCardRequest)
-		        );
+		        .fundingInstrument(new FundingInstrumentRequest().creditCard(creditCardRequest));
 		
-		return api.payment().create(paymentRequest);
+		return new ResponseEntity<>(api.payment().create(paymentRequest), OK);
 	}
 }

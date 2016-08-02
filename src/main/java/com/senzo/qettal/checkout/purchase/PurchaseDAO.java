@@ -1,5 +1,7 @@
 package com.senzo.qettal.checkout.purchase;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -26,8 +28,8 @@ public class PurchaseDAO implements Purchases{
 	}
 
 	@Override
-	public Purchase find(Long id) {
-		return em.find(Purchase.class, id);
+	public Optional<Purchase> find(Long id) {
+		return Optional.ofNullable(em.find(Purchase.class, id));
 	}
 
 }
