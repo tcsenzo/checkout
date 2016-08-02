@@ -14,6 +14,7 @@ create table `purchase` (
 	id bigint(20) not null primary key auto_increment,
 	owner_id bigint(20) not null,
 	created_at datetime not null,
+	reference_id varchar(255),
 	CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES `user`(id)
 );
 

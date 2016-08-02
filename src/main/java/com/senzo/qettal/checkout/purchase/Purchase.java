@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.moip.resource.Order;
+
 import com.senzo.qettal.checkout.users.User;
 
 @Entity
@@ -32,6 +34,8 @@ public class Purchase {
 	private List<PurchaseItem> items;
 	@Column(name="created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
+	@Column(name="reference_id")
+	private String referenceId;
 
 	/**
 	 * @deprecated Hibernate eyes only
@@ -50,6 +54,15 @@ public class Purchase {
 	
 	public List<PurchaseItem> getItems() {
 		return items;
+	}
+
+	public void addMoipInfo(Order createdOrder, Purchases purchases) {
+		this.referenceId = createdOrder.getId();
+		purchases.update(this);
+	}
+
+	public String getReferenceId() {
+		return referenceId;
 	}
 	
 }

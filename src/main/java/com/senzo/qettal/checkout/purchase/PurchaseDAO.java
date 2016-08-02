@@ -18,5 +18,16 @@ public class PurchaseDAO implements Purchases{
 		em.persist(purchase);
 		return purchase;
 	}
+	
+	@Override
+	@Transactional
+	public void update(Purchase purchase) {
+		em.merge(purchase);
+	}
+
+	@Override
+	public Purchase find(Long id) {
+		return em.find(Purchase.class, id);
+	}
 
 }
