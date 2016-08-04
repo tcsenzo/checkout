@@ -32,10 +32,10 @@ public class Purchase {
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "purchase_id", nullable=false)
 	private List<PurchaseItem> items;
-	@Column(name="created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
 	@Column(name="reference_id")
 	private String referenceId;
+	@Column(name="created_at")
+	private LocalDateTime createdAt = LocalDateTime.now();
 
 	/**
 	 * @deprecated Hibernate eyes only

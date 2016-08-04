@@ -2,61 +2,32 @@ package com.senzo.qettal.checkout.purchase;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moip.API;
-import br.com.moip.request.CustomerRequest;
-import br.com.moip.request.OrderRequest;
-import br.com.moip.resource.Order;
-
 import com.senzo.qettal.checkout.security.LoggedUser;
-import com.senzo.qettal.checkout.users.User;
 
 @RestController
 @RequestMapping("/purchases")
 public class PurchaseController {
 
 	@Autowired
-	private PurchaseConverter purchaseConverter;
+	private PurchaseFactory purchaseFactory;
 	@Autowired
 	private Purchases purchases;
 	@Autowired
 	private LoggedUser loggedUser;
-	@Autowired
-	private API api;
 
 	@RequestMapping(method = POST)
-	public Order create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
-		Purchase purchase = purchaseConverter.convert(purchaseDTO);
+	public ResponseEntity<String> create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
+		Purchase purchase = purchaseFactory.create(purchaseDTO);
 		purchases.save(purchase);
-
-		OrderRequest orderRequest = new OrderRequest()
-	        .ownId(purchase.getId().toString());
-	
-		List<PurchaseItem> items = purchase.getItems();
-		for (PurchaseItem purchaseItem : items) {
-			orderRequest.addItem(purchaseItem.getName(), purchaseItem.getQuantity().intValue(), purchaseItem.getDescription(), purchaseItem.getUnitPrice().intValue());
-		}
-		
-		User user = loggedUser.getUser().get();
-		
-	    orderRequest.customer(
-	    		new CustomerRequest()
-	                    .ownId(user.getId().toString())
-	                    .fullname(user.getName())
-	                    .email(user.getEmail()));
-		
-		Order createdOrder = api.order().create(orderRequest);
-		
-		purchase.addMoipInfo(createdOrder, purchases);
-
-		return createdOrder;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

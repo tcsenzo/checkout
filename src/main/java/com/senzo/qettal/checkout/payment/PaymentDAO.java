@@ -1,0 +1,21 @@
+package com.senzo.qettal.checkout.payment;
+
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class PaymentDAO implements Payments{
+
+	@Autowired
+	private EntityManager em;
+	
+	@Override
+	@Transactional
+	public void save(Payment payment) {
+		em.persist(payment);
+	}
+	
+}
