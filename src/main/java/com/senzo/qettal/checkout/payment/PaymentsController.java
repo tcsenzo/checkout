@@ -32,8 +32,6 @@ public class PaymentsController {
 	private MoipApiWrapper api;
 	@Autowired
 	private PaymentFactory factory;
-	@Autowired
-	private Payments payments;
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PaymentDTO paymentDTO) {
@@ -45,8 +43,7 @@ public class PaymentsController {
 		if(!purchase.isOwnedBy(loggedUser.getUser().get()))
 			return new ResponseEntity<>(FORBIDDEN);
 		
-		Payment payment = factory.create(paymentDTO, purchase);
-		payments.save(payment);
+		factory.create(paymentDTO, purchase);
 		
 		return new ResponseEntity<>(OK);
 	}

@@ -2,6 +2,7 @@ package com.senzo.qettal.checkout.purchase;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +35,8 @@ public class Purchase {
 	private List<PurchaseItem> items;
 	@Column(name="reference_id")
 	private String referenceId;
+	@Column(name="unique_id")
+	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name="created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -67,6 +70,10 @@ public class Purchase {
 
 	public boolean isOwnedBy(User user) {
 		return owner.equals(user);
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
 	}
 	
 }

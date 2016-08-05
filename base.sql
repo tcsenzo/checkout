@@ -15,6 +15,7 @@ create table `purchase` (
 	owner_id bigint(20) not null,
 	created_at datetime not null,
 	reference_id varchar(255),
+	unique_id varchar(255),
 	CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES `user`(id)
 );
 
@@ -33,18 +34,17 @@ create table `purchase_item` (
 drop table if exists `payment`;
 create table `payment` (
 	id bigint(20) not null primary key auto_increment,
-	last_status_transition_id bigint(20) not null,
+	last_status varchar(255) not null,
 	purchase_id bigint(20) not null,
 	created_at datetime not null,
-	CONSTRAINT payment_purchase_id_fk FOREIGN KEY (purchase_id) REFERENCES `purchase`(id),
-	CONSTRAINT last_status_transition_id_fk FOREIGN KEY (last_status_transition_id) REFERENCES `payment_status_transition`(id)
+	CONSTRAINT payment_purchase_id_fk FOREIGN KEY (purchase_id) REFERENCES `purchase`(id)
 );
 
 drop table if exists `payment_status_transition`;
 create table `payment_status_transition` (
 	id bigint(20) not null primary key auto_increment,
 	payment_id bigint(20) not null,
-	previous_status varchar(255) not null,
+	previous_status varchar(255),
 	next_status varchar(255) not null,
 	created_at datetime not null,
 	CONSTRAINT payment_id_fk FOREIGN KEY (payment_id) REFERENCES `payment`(id)

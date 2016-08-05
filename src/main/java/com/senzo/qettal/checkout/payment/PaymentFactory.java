@@ -11,10 +11,14 @@ public class PaymentFactory {
 
 	@Autowired
 	private MoipApiWrapper moip;
+	@Autowired
+	private Payments payments;
 
 	public Payment create(PaymentDTO paymentDTO, Purchase purchase) {
+		Payment payment = new Payment(purchase);
+		payments.save(payment);
 		moip.pay(paymentDTO, purchase.getReferenceId());		
-		return new Payment(purchase);
+		return payment;
 	}
 	
 	

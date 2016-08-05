@@ -1,5 +1,7 @@
 package com.senzo.qettal.checkout.payment;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -23,8 +27,15 @@ public class PaymentStatusTransition {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "next_status", nullable = false)
 	private PaymentStatus nextStatus;
+	@ManyToOne
+	@JoinColumn(name = "payment_id")
+	private Payment payment;
+	@Column(name = "created_at")
+	private LocalDateTime createdAt = LocalDateTime.now();
+	
 
-	public PaymentStatusTransition(PaymentStatus previousStatus, PaymentStatus nextStatus) {
+	public PaymentStatusTransition(Payment payment, PaymentStatus previousStatus, PaymentStatus nextStatus) {
+		this.payment = payment;
 		this.previousStatus = previousStatus;
 		this.nextStatus = nextStatus;
 	}

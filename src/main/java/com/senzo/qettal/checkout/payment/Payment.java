@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,12 +30,11 @@ public class Payment {
 	@OneToOne
 	@JoinColumn(name = "purchase_id")
 	private Purchase purchase;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "payment_id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "payment")
 	private List<PaymentStatusTransition> statuses = new ArrayList<>();
-	@OneToOne
-	@JoinColumn(name = "last_status_transition_id")
-	private PaymentStatusTransition lastStatusTransition;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "last_status")
+	private PaymentStatus lastStatus = PaymentStatus.STARTED;
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 	
@@ -42,12 +43,12 @@ public class Payment {
 	 * @deprecated Hibernate eyes only
 	 */
 	Payment() {
+		statuses.add(new PaymentStatusTransition(this, null, lastStatus));
 	}
 
 	public Payment(Purchase purchase) {
+		this();
 		this.purchase = purchase;
-		this.lastStatusTransition = new PaymentStatusTransition(null, PaymentStatus.STARTED);
-		this.statuses.add(lastStatusTransition);
 	}
 
 	public Long getId() {

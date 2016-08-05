@@ -20,14 +20,11 @@ public class PurchaseController {
 	@Autowired
 	private PurchaseFactory purchaseFactory;
 	@Autowired
-	private Purchases purchases;
-	@Autowired
 	private LoggedUser loggedUser;
 
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
 		Purchase purchase = purchaseFactory.create(purchaseDTO);
-		purchases.save(purchase);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
