@@ -8,24 +8,24 @@ public enum PaymentStatus {
 	CANCELED(5),
 	APPROVED(1, 4);
 	
-	private Integer[] equivalentMoipStatuses;
+	private Integer[] moipStatuses;
 	private static HashMap<Integer, PaymentStatus> moipMap = new HashMap<Integer, PaymentStatus>();
 	
 	static {
 		PaymentStatus[] statuses = values();
 		for (PaymentStatus paymentStatus : statuses) {
-			Integer[] equivalentMoipStatuses = paymentStatus.equivalentMoipStatuses;
+			Integer[] equivalentMoipStatuses = paymentStatus.moipStatuses;
 			for (Integer moipStatus : equivalentMoipStatuses) {
 				moipMap.put(moipStatus, paymentStatus);
 			}
 		}
 	}
 	
-	private PaymentStatus(Integer...equivalentMoipStatuses) {
-		this.equivalentMoipStatuses = equivalentMoipStatuses;
+	private PaymentStatus(Integer...moipStatuses) {
+		this.moipStatuses = moipStatuses;
 	}
 	
-	public static PaymentStatus getEquivalentToMop(Integer status){
-		return moipMap.get(status);
+	public static PaymentStatus equivalentToMoip(Integer moipStatus){
+		return moipMap.get(moipStatus);
 	}
 }

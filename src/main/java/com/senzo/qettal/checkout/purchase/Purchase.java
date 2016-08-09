@@ -2,6 +2,7 @@ package com.senzo.qettal.checkout.purchase;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -14,10 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.moip.resource.Order;
 
+import com.senzo.qettal.checkout.payment.Payment;
 import com.senzo.qettal.checkout.users.User;
 
 @Entity
@@ -30,14 +33,14 @@ public class Purchase {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private User owner;
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "purchase_id", nullable=false)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "purchase_id", nullable = false)
 	private List<PurchaseItem> items;
-	@Column(name="reference_id")
+	@Column(name = "reference_id")
 	private String referenceId;
-	@Column(name="unique_id")
+	@Column(name = "unique_id")
 	private String uniqueId = UUID.randomUUID().toString();
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 	/**
@@ -54,7 +57,7 @@ public class Purchase {
 	public Long getId() {
 		return id;
 	}
-	
+
 	public List<PurchaseItem> getItems() {
 		return items;
 	}

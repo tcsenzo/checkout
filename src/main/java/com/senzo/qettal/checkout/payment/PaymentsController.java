@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.senzo.qettal.checkout.moip.MoipApiWrapper;
@@ -32,6 +33,8 @@ public class PaymentsController {
 	private MoipApiWrapper api;
 	@Autowired
 	private PaymentFactory factory;
+	@Autowired
+	private Payments payments;
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PaymentDTO paymentDTO) {
@@ -44,6 +47,19 @@ public class PaymentsController {
 			return new ResponseEntity<>(FORBIDDEN);
 		
 		factory.create(paymentDTO, purchase);
+		
+		return new ResponseEntity<>(OK);
+	}
+	
+	@RequestMapping(path="/moip/callback", method = POST)
+	public ResponseEntity<String> updateStatus(@RequestParam("id_transacao") String orderUniqueId, @RequestParam("status_pagamento") Integer paymentStatus) {
+		Optional<Payment> optionalPayment = payments.findByPurchaseUniqueId(orderUniqueId);
+		if(!optionalPayment.isPresent()){
+			return new ResponseEntity<>(NOT_FOUND);
+		}
+
+		Payment payment = optionalPayment.get();
+		payment.updateStatus(PaymentStatus.equivalentToMoip(paymentStatus), payments);
 		
 		return new ResponseEntity<>(OK);
 	}

@@ -55,4 +55,10 @@ public class Payment {
 		return id;
 	}
 
+	public void updateStatus(PaymentStatus nextStatus, Payments payments) {
+		this.statuses.add(new PaymentStatusTransition(this, lastStatus, nextStatus));
+		this.lastStatus = nextStatus;
+		payments.update(this);
+	}
+
 }
