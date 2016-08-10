@@ -3,6 +3,7 @@ package com.senzo.qettal.checkout.purchase;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,13 +25,18 @@ public class PurchaseFactory {
 	@Autowired
 	private Purchases purchases;
 	
-	public Purchase create(PurchaseDTO purchaseDTO) {
-		List<PurchaseItem> items = purchaseDTO.getItems().stream().map(itemConverter::convert).collect(toList());
-		Purchase purchase = new Purchase(loggedUser.getUser().get(), items);
-		purchases.save(purchase);
-		Order order = moip.order(purchase);
-		purchase.addMoipInfo(order, purchases);
-		return purchase;
+	public Optional<Purchase> create(PurchaseDTO purchaseDTO) {
+		try{
+			List<PurchaseItem> items = purchaseDTO.getItems().stream().map(itemConverter::convert).collect(toList());
+			
+			Purchase purchase = new Purchase(loggedUser.getUser().get(), items);
+			purchases.save(purchase);
+			Order order = moip.order(purchase);
+			purchase.addMoipInfo(order, purchases);
+			return Optional.of(purchase);
+		} catch (EventNotAvailableException e){
+			return Optional.empty();
+		}
 	}
 
 }

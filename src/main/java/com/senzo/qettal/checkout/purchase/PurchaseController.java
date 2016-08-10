@@ -1,11 +1,14 @@
 package com.senzo.qettal.checkout.purchase;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,10 @@ public class PurchaseController {
 
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
-		Purchase purchase = purchaseFactory.create(purchaseDTO);
-		return new ResponseEntity<>(HttpStatus.OK);
+		Optional<Purchase> optionalPurchase = purchaseFactory.create(purchaseDTO);
+		if(!optionalPurchase.isPresent()){
+			return new ResponseEntity<>(CONFLICT);
+		}
+		return new ResponseEntity<>(CREATED);
 	}
 }
