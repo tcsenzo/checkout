@@ -86,6 +86,7 @@ Possible responses:
 
 - 202 - Purchase created
 - 400 - Invalid or insufficient data
+- 409 - Event not available
 
 ## Payments
 
