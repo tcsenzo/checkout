@@ -28,4 +28,9 @@ public enum PaymentStatus {
 	public static PaymentStatus equivalentToMoip(Integer moipStatus){
 		return moipMap.get(moipStatus);
 	}
+	
+	public boolean isApproved(){
+		return APPROVED.equals(this);
+	}
+	
 }

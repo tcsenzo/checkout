@@ -6,8 +6,6 @@ public interface Payments {
 
 	void save(Payment payment);
 
-	Optional<Payment> findByPurchaseUniqueId(String orderUniqueId);
-
 	void update(Payment payment);
 
 }

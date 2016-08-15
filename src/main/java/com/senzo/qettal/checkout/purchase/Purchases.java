@@ -11,4 +11,6 @@ public interface Purchases {
 
 	void update(Purchase purchase);
 
+	Optional<Purchase> findByUniqueId(String purchaseUniqueId);
+
 }

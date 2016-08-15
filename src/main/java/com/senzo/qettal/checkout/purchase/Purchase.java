@@ -38,6 +38,8 @@ public class Purchase {
 	private List<PurchaseItem> items;
 	@Column(name = "reference_id")
 	private String referenceId;
+	@OneToOne(mappedBy="purchase")
+	private Payment payment;
 	@Column(name = "unique_id")
 	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name = "created_at")
@@ -77,6 +79,10 @@ public class Purchase {
 
 	public String getUniqueId() {
 		return uniqueId;
+	}
+
+	public Optional<Payment> getPayment() {
+		return Optional.ofNullable(payment);
 	}
 	
 }

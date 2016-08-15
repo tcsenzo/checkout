@@ -27,16 +27,4 @@ public class PaymentDAO implements Payments{
 		em.merge(payment);
 	}
 	
-	@Override
-	public Optional<Payment> findByPurchaseUniqueId(String uniqueId) {
-		try {
-			String hql = "from Payment p where p.purchase.uniqueId = :uniqueId";
-			return Optional.of(em.createQuery(hql, Payment.class)
-					.setParameter("uniqueId", uniqueId)
-					.getSingleResult());
-		} catch (NoResultException e) {
-			return Optional.empty();
-		}
-	}
-	
 }

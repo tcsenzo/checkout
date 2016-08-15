@@ -28,7 +28,7 @@ public class Payment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToOne
-	@JoinColumn(name = "purchase_id")
+	@JoinColumn(name = "purchase_id", nullable = false)
 	private Purchase purchase;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "payment")
 	private List<PaymentStatusTransition> statuses = new ArrayList<>();
@@ -59,6 +59,10 @@ public class Payment {
 		this.statuses.add(new PaymentStatusTransition(this, lastStatus, nextStatus));
 		this.lastStatus = nextStatus;
 		payments.update(this);
+	}
+
+	public boolean isApproved() {
+		return lastStatus.isApproved();
 	}
 
 }

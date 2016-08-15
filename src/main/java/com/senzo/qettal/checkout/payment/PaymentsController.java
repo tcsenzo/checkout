@@ -20,6 +20,7 @@ import com.senzo.qettal.checkout.moip.MoipApiWrapper;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.Purchases;
 import com.senzo.qettal.checkout.security.LoggedUser;
+import com.senzo.qettal.checkout.tickets.TicketGenerator;
 
 @RestController
 @RequestMapping("/payments")
@@ -35,6 +36,8 @@ public class PaymentsController {
 	private PaymentFactory factory;
 	@Autowired
 	private Payments payments;
+	@Autowired
+	private TicketGenerator tickets; 
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PaymentDTO paymentDTO) {
@@ -52,14 +55,23 @@ public class PaymentsController {
 	}
 	
 	@RequestMapping(path="/moip/callback", method = POST)
-	public ResponseEntity<String> updateStatus(@RequestParam("id_transacao") String orderUniqueId, @RequestParam("status_pagamento") Integer paymentStatus) {
-		Optional<Payment> optionalPayment = payments.findByPurchaseUniqueId(orderUniqueId);
-		if(!optionalPayment.isPresent()){
+	public ResponseEntity<String> updateStatus(@RequestParam("id_transacao") String purchaseUniqueId, @RequestParam("status_pagamento") Integer paymentStatus) {
+		Optional<Purchase> optionalPurchase = purchases.findByUniqueId(purchaseUniqueId);
+		if(!optionalPurchase.isPresent()){
 			return new ResponseEntity<>(NOT_FOUND);
 		}
 
+		Purchase purchase = optionalPurchase.get();
+		Optional<Payment> optionalPayment = purchase.getPayment();
+		if(!optionalPayment.isPresent()){
+			return new ResponseEntity<>(NOT_FOUND);
+		}
 		Payment payment = optionalPayment.get();
 		payment.updateStatus(PaymentStatus.equivalentToMoip(paymentStatus), payments);
+		
+		if(payment.isApproved()){
+			tickets.generateFor(purchase);
+		}
 		
 		return new ResponseEntity<>(OK);
 	}
