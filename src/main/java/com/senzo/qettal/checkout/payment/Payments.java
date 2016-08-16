@@ -1,6 +1,5 @@
 package com.senzo.qettal.checkout.payment;
 
-import java.util.Optional;
 
 public interface Payments {
 

@@ -1,9 +1,6 @@
 package com.senzo.qettal.checkout.payment;
 
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;

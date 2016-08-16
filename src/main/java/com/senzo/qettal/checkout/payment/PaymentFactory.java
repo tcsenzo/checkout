@@ -15,8 +15,7 @@ public class PaymentFactory {
 	private Payments payments;
 
 	public Payment create(PaymentDTO paymentDTO, Purchase purchase) {
-		Payment payment = new Payment(purchase);
-		payments.save(payment);
+		Payment payment = purchase.pay(payments);
 		moip.pay(paymentDTO, purchase.getReferenceId());		
 		return payment;
 	}

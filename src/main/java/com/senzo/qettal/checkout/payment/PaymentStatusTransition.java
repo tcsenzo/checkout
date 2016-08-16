@@ -33,7 +33,12 @@ public class PaymentStatusTransition {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 	
-
+	/**
+	 * @deprecated Hibernate eyes only
+	 */
+	PaymentStatusTransition() {
+	}
+	
 	public PaymentStatusTransition(Payment payment, PaymentStatus previousStatus, PaymentStatus nextStatus) {
 		this.payment = payment;
 		this.previousStatus = previousStatus;

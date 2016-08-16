@@ -1,6 +1,7 @@
 package com.senzo.qettal.checkout.purchase;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,12 +16,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.moip.resource.Order;
 
 import com.senzo.qettal.checkout.payment.Payment;
+import com.senzo.qettal.checkout.payment.Payments;
 import com.senzo.qettal.checkout.users.User;
 
 @Entity
@@ -33,13 +34,13 @@ public class Purchase {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private User owner;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	@JoinColumn(name = "purchase_id", nullable = false)
 	private List<PurchaseItem> items;
 	@Column(name = "reference_id")
 	private String referenceId;
-	@OneToOne(mappedBy="purchase")
-	private Payment payment;
+	@OneToMany(mappedBy="purchase", fetch=FetchType.EAGER)
+	private List<Payment> payment;
 	@Column(name = "unique_id")
 	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name = "created_at")
@@ -82,7 +83,14 @@ public class Purchase {
 	}
 
 	public Optional<Payment> getPayment() {
-		return Optional.ofNullable(payment);
+		return Optional.ofNullable(payment.get(0));
 	}
-	
+
+	public Payment pay(Payments payments) {
+		Payment payment = new Payment(this);
+		this.payment = Arrays.asList(payment);
+		payments.save(payment);
+		return payment;
+	}
+
 }

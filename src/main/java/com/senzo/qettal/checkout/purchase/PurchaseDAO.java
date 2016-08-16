@@ -37,7 +37,9 @@ public class PurchaseDAO implements Purchases {
 	public Optional<Purchase> findByUniqueId(String purchaseUniqueId) {
 		String hql = "from " + Purchase.class.getSimpleName() + " p where p.uniqueId = :uniqueId";
 		try{
-			Purchase purchase = em.createQuery(hql, Purchase.class).getSingleResult();
+			Purchase purchase = em.createQuery(hql, Purchase.class)
+					.setParameter("uniqueId", purchaseUniqueId)
+					.getSingleResult();
 			return Optional.of(purchase);
 		} catch(NoResultException e) {
 			return Optional.empty();

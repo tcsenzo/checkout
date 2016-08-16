@@ -50,6 +50,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 				.and().authorizeRequests()
 						.antMatchers(HttpMethod.POST, "/users").permitAll()
+						.antMatchers(HttpMethod.POST, "/payments/moip/callback").permitAll()
 						.anyRequest().authenticated()
 				
 				.and().formLogin()

@@ -33,12 +33,11 @@ public class Payment {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "payment")
 	private List<PaymentStatusTransition> statuses = new ArrayList<>();
 	@Enumerated(EnumType.STRING)
-	@Column(name = "last_status")
+	@Column(name = "last_status", nullable = false)
 	private PaymentStatus lastStatus = PaymentStatus.STARTED;
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 	
-
 	/**
 	 * @deprecated Hibernate eyes only
 	 */
