@@ -124,11 +124,63 @@ Possible responses:
 - 404 - Purchase not found
 
 
-## How to simulate moip callbacks
+### How to simulate moip callbacks
 
 Setting payment status to APPROVED:
 
 Example
+
 ```bash
 curl -X POST http://localhost:8082/payments/moip/callback -d id_transacao=<purchase_unique_id> -d status_pagamento=1
+```
+
+Possible responses:
+
+- 200 - Ok
+- 404 - Purchase or payment not found
+
+
+## Tickets
+
+### How to create one
+
+You have to send the moip callback above to confirm your payment.
+If you do this, your ticket will be generated automatically
+
+### How to get a specific event (REQUIRES LOGIN)
+
+
+Example
+
+```
+curl -b /tmp/cookies.txt -H "Content-Type:application/json" http://localhost:8082/tickets/0d63f1d98c1d0e718a058ca57add34555e15a56dadbee5c1d4eb6ada69c70035
+```
+
+The response will be a json in as the one bellow:
+
+```json
+{
+    "event": {
+        "name": "Evento maroto",
+        "price": 22.0,
+        "scheduled_date": "2017-12-03T10:15:30",
+        "theater": {
+            "address": {
+                "city": "S\u00e3o Paulo",
+                "country": "Brasil",
+                "district": "Vila Olimpia",
+                "number": "360",
+                "state": "SP",
+                "street": "Rua Olimp\u00edadas",
+                "zip_code": "04551-000"
+            },
+            "name": "Teatro NET SP"
+        }
+    },
+    "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/0d63f1d98c1d0e718a058ca57add34555e15a56dadbee5c1d4eb6ada69c70035.png",
+    "user": {
+        "name": "Leonardo"
+    }
+}
+
 ```
