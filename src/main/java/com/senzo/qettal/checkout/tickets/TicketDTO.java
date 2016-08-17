@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TicketDTO {
 
+	@JsonProperty("qrcode_url")
+	private String qrCodeUrl;
 	@JsonProperty("event")
 	private TicketEventDTO event;
 	@JsonProperty
@@ -19,7 +21,8 @@ public class TicketDTO {
 	TicketDTO() {
 	}
 
-	public TicketDTO(TicketEventDTO event, TicketOwnerDTO user) {
+	public TicketDTO(String qrCodeUrl, TicketEventDTO event, TicketOwnerDTO user) {
+		this.qrCodeUrl = qrCodeUrl;
 		this.event = event;
 		this.user = user;
 	}

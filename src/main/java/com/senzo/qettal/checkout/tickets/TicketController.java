@@ -7,7 +7,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +20,8 @@ public class TicketController {
 
 	@Autowired
 	private Tickets tickets;
+	@Autowired
+	private TicketQRCodeUrlExtractor urlExtractor;
 	
 	@RequestMapping(path = "/{hash}", method = GET)
 	public ResponseEntity<TicketDTO> show(@PathVariable("hash") String hash) {
@@ -34,7 +35,7 @@ public class TicketController {
 		TicketTheaterDTO theater = new TicketTheaterDTO(ticket.getTheaterName(), AddressDTO.from(ticket.getTheaterAddress()));
 		TicketEventDTO event = new TicketEventDTO(ticket.getEventName(), ticket.getPrice(), ticket.getScheduledDate(), theater);
 		TicketOwnerDTO user = new TicketOwnerDTO(ticket.getOwnerName());
-		TicketDTO ticketDTO = new TicketDTO(event, user);
+		TicketDTO ticketDTO = new TicketDTO(urlExtractor.extractFrom(ticket), event, user);
 		
 		return new ResponseEntity<>(ticketDTO, OK);
 	}

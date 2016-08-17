@@ -29,6 +29,12 @@ public class Ticket {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 	private String hash;
+	
+	/**
+	 * @deprecated JPA eyes only
+	 */
+	Ticket() {
+	}
 
 	public Ticket(String hash, PurchaseItem purchaseItem) {
 		this.hash = hash;
@@ -61,6 +67,10 @@ public class Ticket {
 
 	public LocalDateTime getScheduledDate() {
 		return purchaseItem.getScheduledDate();
+	}
+
+	public String getHash() {
+		return hash;
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.senzo.qettal.checkout.tickets;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
