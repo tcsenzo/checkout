@@ -1,5 +1,6 @@
 package com.senzo.qettal.checkout.tickets;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.senzo.qettal.checkout.address.Address;
 import com.senzo.qettal.checkout.purchase.PurchaseItem;
 
 
@@ -32,6 +34,33 @@ public class Ticket {
 		this.hash = hash;
 		this.purchaseItem = purchaseItem;
 	}
+
+	public String getOwnerName() {
+		return purchaseItem.getOwnerName();
+	}
+
+	public String getTheaterName() {
+		return purchaseItem.getTheaterName();
+	}
+
+	public Address getTheaterAddress() {
+		return purchaseItem.getTheaterAddress();
+	}
+
+	public String getEventName() {
+		return purchaseItem.getEventName();
+	}
 	
+	public String getEventDescription() {
+		return purchaseItem.getEventDescription();
+	}
+
+	public BigDecimal getPrice() {
+		return purchaseItem.getPrice();
+	}
+
+	public LocalDateTime getScheduledDate() {
+		return purchaseItem.getScheduledDate();
+	}
 
 }

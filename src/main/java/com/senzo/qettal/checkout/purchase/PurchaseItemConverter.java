@@ -1,31 +1,18 @@
 package com.senzo.qettal.checkout.purchase;
 
-import static org.springframework.http.HttpMethod.PUT;
+import static java.util.stream.LongStream.rangeClosed;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import java.util.stream.Stream;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 public class PurchaseItemConverter {
-	
-	@Value("${url.checkoutEvents}")
-	private String checkoutEventsUrl;
 
-	public PurchaseItem convert(PurchaseItemDTO purchaseItemDTO, Purchase purchase) {
-		try {
-			RestTemplate restTemplate = new RestTemplate();
-			
-			CheckoutToEventDTO checkoutDto = new CheckoutToEventDTO(purchaseItemDTO.getQuantity());
-			ResponseEntity<EventDTO> response = restTemplate.exchange(checkoutEventsUrl + "/" + purchaseItemDTO.getEventId(), PUT, new HttpEntity<CheckoutToEventDTO>(checkoutDto), EventDTO.class);
-			EventDTO event = response.getBody();
-			return new PurchaseItem(event.getName(), event.getDescription(), purchaseItemDTO.getQuantity(), event.getPrice(), purchase);
-		} catch (HttpClientErrorException e)   {
-			throw new EventNotAvailableException(e);
-		}
+	public Stream<PurchaseItem> convert(PurchaseItemDTO purchaseItemDTO, PurchaseEventDTO event, Purchase purchase) {
+		Long quantity = purchaseItemDTO.getQuantity();
+		return rangeClosed(1l, quantity)
+        		.mapToObj(i -> new PurchaseItem(event.getPrice(), purchase));
 	}
 	
 }

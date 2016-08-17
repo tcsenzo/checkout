@@ -42,9 +42,9 @@ public class MoipApiWrapper {
 
 		List<PurchaseItem> items = purchase.getItems();
 		for (PurchaseItem purchaseItem : items) {
-			orderRequest.addItem(purchaseItem.getName(), purchaseItem.getQuantity().intValue(),
-					purchaseItem.getDescription(),
-					Integer.valueOf(df.format(purchaseItem.getUnitPrice()).replace(".", "")));
+			orderRequest.addItem(purchase.getEventName(), 1,
+					purchase.getEventDescription(),
+					Integer.valueOf(df.format(purchaseItem.getPrice()).replace(".", "")));
 		}
 
 		User user = loggedUser.getUser().get();

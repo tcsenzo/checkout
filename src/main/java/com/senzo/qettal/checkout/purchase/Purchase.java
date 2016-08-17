@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 
 import br.com.moip.resource.Order;
 
+import com.senzo.qettal.checkout.address.Address;
 import com.senzo.qettal.checkout.payment.Payment;
 import com.senzo.qettal.checkout.payment.Payments;
 import com.senzo.qettal.checkout.users.User;
@@ -37,6 +39,16 @@ public class Purchase {
 	private User owner;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="purchase")	
 	private List<PurchaseItem> items = new ArrayList<>();
+	@Column(name = "theater_name")
+	private String theaterName;
+	@Embedded
+	private Address theaterAddress;
+	@Column(name = "event_name")
+	private String eventName;
+	@Column(name = "event_description")
+	private String eventDescription;
+	@Column(name = "scheduled_date")
+	private LocalDateTime scheduledDate;
 	@Column(name = "reference_id")
 	private String referenceId;
 	@OneToMany(mappedBy="purchase", fetch=FetchType.EAGER)
@@ -52,8 +64,13 @@ public class Purchase {
 	Purchase() {
 	}
 
-	public Purchase(User owner) {
+	public Purchase(User owner, String eventName, String eventDescription, LocalDateTime scheduledDate, String theaterName, Address theaterAddress) {
 		this.owner = owner;
+		this.eventName = eventName;
+		this.eventDescription = eventDescription;
+		this.scheduledDate = scheduledDate;
+		this.theaterName = theaterName;
+		this.theaterAddress = theaterAddress;
 	}
 
 	public Long getId() {
@@ -94,6 +111,30 @@ public class Purchase {
 
 	public void addItems(List<PurchaseItem> items) {
 		this.items.addAll(items);
+	}
+	
+	public String getOwnerName(){
+		return owner.getName();
+	}
+
+	public String getEventName() {
+		return eventName;
+	}
+	
+	public String getEventDescription() {
+		return eventDescription;
+	}
+
+	public String getTheaterName() {
+		return theaterName;
+	}
+	
+	public Address getTheaterAddress() {
+		return theaterAddress;
+	}
+
+	public LocalDateTime getScheduledDate() {
+		return scheduledDate;
 	}
 
 }

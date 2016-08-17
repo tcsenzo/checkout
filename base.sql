@@ -13,6 +13,18 @@ drop table if exists `purchase`;
 create table `purchase` (
 	id bigint(20) not null primary key auto_increment,
 	owner_id bigint(20) not null,
+	event_name varchar(255) not null,
+	event_description varchar(255) not null,
+	scheduled_date datetime not null,
+	theater_name varchar(255) not null,
+	street varchar(255) not null,
+	number varchar(255) not null,
+	complement varchar(255),
+	district varchar(255) not null,
+	city varchar(255) not null,
+	state varchar(255) not null,
+	country varchar(255) not null,
+	zip_code varchar(255) not null,
 	created_at datetime not null,
 	reference_id varchar(255),
 	unique_id varchar(255),
@@ -23,10 +35,7 @@ drop table if exists `purchase_item`;
 create table `purchase_item` (
 	id bigint(20) not null primary key auto_increment,
 	purchase_id bigint(20) not null,
-	name varchar(255) not null,
-	description varchar(255) not null,
-	unit_price varchar(30) not null,
-	quantity int(11) not null,
+	price varchar(30) not null,
 	created_at datetime not null,
 	CONSTRAINT item_purchase_id_fk FOREIGN KEY (purchase_id) REFERENCES `purchase`(id)
 );

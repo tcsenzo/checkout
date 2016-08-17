@@ -42,7 +42,8 @@ public class TicketQRCodeGenerator {
 			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
-			BitMatrix byteMatrix = qrCodeWriter.encode(ticketUrlBase, BarcodeFormat.QR_CODE, size, size, hintMap);
+			String hash = hash(item);
+			BitMatrix byteMatrix = qrCodeWriter.encode(ticketUrlBase+"/"+hash, BarcodeFormat.QR_CODE, size, size, hintMap);
 			int CrunchifyWidth = byteMatrix.getWidth();
 			BufferedImage image = new BufferedImage(CrunchifyWidth, CrunchifyWidth, BufferedImage.TYPE_INT_RGB);
 			image.createGraphics();
@@ -61,7 +62,7 @@ public class TicketQRCodeGenerator {
 			}
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			ImageIO.write(image, "png", os);
-			return new TicketQRCode(os.toByteArray(), item, hash(item));
+			return new TicketQRCode(os.toByteArray(), item, hash);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

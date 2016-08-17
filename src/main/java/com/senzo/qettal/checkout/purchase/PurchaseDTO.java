@@ -13,8 +13,19 @@ public class PurchaseDTO {
 	@JsonProperty
 	private List<PurchaseItemDTO> items;
 
+	@JsonProperty("event_id")
+	private Long eventId;
+	
+	public Long getEventId() {
+		return eventId;
+	}
+	
 	public List<PurchaseItemDTO> getItems() {
 		return items;
+	}
+
+	public Long getTotalQuantity() {
+		return items.stream().mapToLong(PurchaseItemDTO::getQuantity).sum();
 	}
 
 }

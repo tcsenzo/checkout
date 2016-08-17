@@ -12,17 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.senzo.qettal.checkout.address.Address;
+
 @Entity
 @Table(name = "purchase_item")
 public class PurchaseItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String description;
-	private Long quantity;
-	@Column(name="unit_price")
-	private BigDecimal unitPrice;
+	@Column(name="price")
+	private BigDecimal price;
 	@ManyToOne
 	@JoinColumn(name = "purchase_id", nullable = false)
 	private Purchase purchase;
@@ -35,28 +34,13 @@ public class PurchaseItem {
 	PurchaseItem() {
 	}
 
-	public PurchaseItem(String name, String description, Long quantity, BigDecimal unitPrice, Purchase purchase) {
-		this.name = name;
-		this.description = description;
-		this.quantity = quantity;
-		this.unitPrice = unitPrice;
+	public PurchaseItem(BigDecimal price, Purchase purchase) {
+		this.price = price;
 		this.purchase = purchase;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Long getQuantity() {
-		return quantity;
-	}
-
-	public BigDecimal getUnitPrice() {
-		return unitPrice;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
 	public Long getId() {
@@ -65,6 +49,30 @@ public class PurchaseItem {
 	
 	public String getPurchaseUniqueId() {
 		return purchase.getUniqueId();
+	}
+
+	public String getOwnerName() {
+		return purchase.getOwnerName();
+	}
+
+	public String getTheaterName() {
+		return purchase.getTheaterName();
+	}
+
+	public Address getTheaterAddress() {
+		return purchase.getTheaterAddress();
+	}
+
+	public String getEventName() {
+		return purchase.getEventName();
+	}
+	
+	public String getEventDescription() {
+		return purchase.getEventDescription();
+	}
+
+	public LocalDateTime getScheduledDate() {
+		return purchase.getScheduledDate();
 	}
 
 }
