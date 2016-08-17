@@ -20,7 +20,7 @@ import com.senzo.qettal.checkout.moip.MoipApiWrapper;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.Purchases;
 import com.senzo.qettal.checkout.security.LoggedUser;
-import com.senzo.qettal.checkout.tickets.TicketGenerator;
+import com.senzo.qettal.checkout.tickets.TicketFactory;
 
 @RestController
 @RequestMapping("/payments")
@@ -37,7 +37,7 @@ public class PaymentsController {
 	@Autowired
 	private Payments payments;
 	@Autowired
-	private TicketGenerator tickets; 
+	private TicketFactory tickets; 
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PaymentDTO paymentDTO) {
@@ -70,7 +70,7 @@ public class PaymentsController {
 		payment.updateStatus(PaymentStatus.equivalentToMoip(paymentStatus), payments);
 		
 		if(payment.isApproved()){
-			tickets.generateFor(purchase);
+			tickets.createFor(purchase);
 		}
 		
 		return new ResponseEntity<>(OK);

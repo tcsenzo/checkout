@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,9 @@ public class PurchaseItem {
 	private Long quantity;
 	@Column(name="unit_price")
 	private BigDecimal unitPrice;
+	@ManyToOne
+	@JoinColumn(name = "purchase_id", nullable = false)
+	private Purchase purchase;
 	@Column(name="created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -30,11 +35,12 @@ public class PurchaseItem {
 	PurchaseItem() {
 	}
 
-	public PurchaseItem(String name, String description, Long quantity, BigDecimal unitPrice) {
+	public PurchaseItem(String name, String description, Long quantity, BigDecimal unitPrice, Purchase purchase) {
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
+		this.purchase = purchase;
 	}
 
 	public String getName() {
@@ -51,6 +57,14 @@ public class PurchaseItem {
 
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	public String getPurchaseUniqueId() {
+		return purchase.getUniqueId();
 	}
 
 }

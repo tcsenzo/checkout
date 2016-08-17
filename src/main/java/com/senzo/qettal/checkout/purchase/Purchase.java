@@ -1,6 +1,7 @@
 package com.senzo.qettal.checkout.purchase;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +35,8 @@ public class Purchase {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private User owner;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
-	@JoinColumn(name = "purchase_id", nullable = false)
-	private List<PurchaseItem> items;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="purchase")	
+	private List<PurchaseItem> items = new ArrayList<>();
 	@Column(name = "reference_id")
 	private String referenceId;
 	@OneToMany(mappedBy="purchase", fetch=FetchType.EAGER)
@@ -52,9 +52,8 @@ public class Purchase {
 	Purchase() {
 	}
 
-	public Purchase(User owner, List<PurchaseItem> items) {
+	public Purchase(User owner) {
 		this.owner = owner;
-		this.items = items;
 	}
 
 	public Long getId() {
@@ -91,6 +90,10 @@ public class Purchase {
 		this.payment = Arrays.asList(payment);
 		payments.save(payment);
 		return payment;
+	}
+
+	public void addItems(List<PurchaseItem> items) {
+		this.items.addAll(items);
 	}
 
 }

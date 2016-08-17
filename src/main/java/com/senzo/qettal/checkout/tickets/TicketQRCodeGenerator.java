@@ -1,44 +1,39 @@
 package com.senzo.qettal.checkout.tickets;
 
+import static java.lang.System.currentTimeMillis;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.EnumMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.senzo.qettal.checkout.purchase.Purchase;
+import com.senzo.qettal.checkout.purchase.PurchaseItem;
 
 @Component
-public class TicketGenerator {
-	
-	@Value("${aws.s3.bucket.tickets}")
-	private String ticketsS3Bucket;
+public class TicketQRCodeGenerator {
+
+	private static final String SALT = "amskf(*901%6";
+
 	@Value("${url.ticket}")
 	private String ticketUrlBase;
 	
-	@Autowired
-	private AmazonS3 s3;
-	
-	public void generateFor(Purchase purchase) {
+	public TicketQRCode generate(PurchaseItem item){
 		int size = 250;
 		try {
 			Map<EncodeHintType, Object> hintMap = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
@@ -66,20 +61,17 @@ public class TicketGenerator {
 			}
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			ImageIO.write(image, "png", os);
-			byte[] buffer = os.toByteArray();
-			InputStream is = new ByteArrayInputStream(buffer);
-			
-			ObjectMetadata meta = new ObjectMetadata();
-			meta.setContentLength(buffer.length);
-			meta.setContentType("image/png");
-			PutObjectRequest putObjectRequest = new PutObjectRequest(ticketsS3Bucket, purchase.getUniqueId()+".png", is, meta);
-			s3.putObject(putObjectRequest);
-		} catch (WriterException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return new TicketQRCode(os.toByteArray(), item, hash(item));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-
 	}
-
+	
+	private String hash(PurchaseItem item) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		String key = item.getPurchaseUniqueId() + item.getId() + currentTimeMillis() + SALT;
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(key.getBytes("UTF-8"));
+		String hashedTicketName = new String(Hex.encode(md.digest()));
+		return hashedTicketName;
+	}
 }

@@ -27,9 +27,9 @@ public class PurchaseFactory {
 	
 	public Optional<Purchase> create(PurchaseDTO purchaseDTO) {
 		try{
-			List<PurchaseItem> items = purchaseDTO.getItems().stream().map(itemConverter::convert).collect(toList());
-			
-			Purchase purchase = new Purchase(loggedUser.getUser().get(), items);
+			Purchase purchase = new Purchase(loggedUser.getUser().get());
+			List<PurchaseItem> items = purchaseDTO.getItems().stream().map(dto -> itemConverter.convert(dto, purchase)).collect(toList());
+			purchase.addItems(items);
 			purchases.save(purchase);
 			Order order = moip.order(purchase);
 			purchase.addMoipInfo(order, purchases);

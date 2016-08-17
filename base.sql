@@ -50,4 +50,13 @@ create table `payment_status_transition` (
 	CONSTRAINT payment_id_fk FOREIGN KEY (payment_id) REFERENCES `payment`(id)
 );
 
+drop table if exists `ticket`;
+create table `ticket` (
+	id bigint(20) not null primary key auto_increment,
+	purchase_item_id bigint(20) not null,
+	hash varchar(255) not null,
+	created_at datetime not null,
+	CONSTRAINT purchase_item_fk FOREIGN KEY (purchase_item_id) REFERENCES `purchase_item`(id)
+);
+
 set foreign_key_checks = true;

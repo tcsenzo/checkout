@@ -15,18 +15,17 @@ public class PurchaseItemConverter {
 	@Value("${url.checkoutEvents}")
 	private String checkoutEventsUrl;
 
-	public PurchaseItem convert(PurchaseItemDTO purchaseItemDTO) {
+	public PurchaseItem convert(PurchaseItemDTO purchaseItemDTO, Purchase purchase) {
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 			
 			CheckoutToEventDTO checkoutDto = new CheckoutToEventDTO(purchaseItemDTO.getQuantity());
 			ResponseEntity<EventDTO> response = restTemplate.exchange(checkoutEventsUrl + "/" + purchaseItemDTO.getEventId(), PUT, new HttpEntity<CheckoutToEventDTO>(checkoutDto), EventDTO.class);
 			EventDTO event = response.getBody();
-			return new PurchaseItem(event.getName(), event.getDescription(), purchaseItemDTO.getQuantity(), event.getPrice());
+			return new PurchaseItem(event.getName(), event.getDescription(), purchaseItemDTO.getQuantity(), event.getPrice(), purchase);
 		} catch (HttpClientErrorException e)   {
 			throw new EventNotAvailableException(e);
 		}
 	}
-	
 	
 }
