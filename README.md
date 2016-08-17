@@ -117,3 +117,13 @@ Possible responses:
 - 202 - Payment created
 - 400 - Invalid or insufficient data
 - 404 - Purchase not found
+
+
+## How to simulate moip callbacks
+
+Setting payment status to APPROVED:
+
+Example
+```bash
+curl -X POST http://localhost:8082/payments/moip/callback -d id_transacao=<purchase_unique_id> -d status_pagamento=1
+```
