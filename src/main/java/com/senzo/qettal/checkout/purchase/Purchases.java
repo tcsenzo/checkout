@@ -1,6 +1,9 @@
 package com.senzo.qettal.checkout.purchase;
 
+import java.util.List;
 import java.util.Optional;
+
+import com.senzo.qettal.checkout.users.User;
 
 
 public interface Purchases {
@@ -12,5 +15,7 @@ public interface Purchases {
 	void update(Purchase purchase);
 
 	Optional<Purchase> findByUniqueId(String purchaseUniqueId);
+
+	List<Purchase> of(User user);
 
 }

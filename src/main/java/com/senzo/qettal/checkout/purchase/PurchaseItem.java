@@ -1,10 +1,13 @@
 package com.senzo.qettal.checkout.purchase;
 
+import static javax.persistence.EnumType.STRING;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.senzo.qettal.checkout.address.Address;
+import com.senzo.qettal.checkout.ticket.TicketType;
 
 @Entity
 @Table(name = "purchase_item")
@@ -22,6 +26,9 @@ public class PurchaseItem {
 	private Long id;
 	@Column(name="price")
 	private BigDecimal price;
+	@Column(name="ticket_type")
+	@Enumerated(STRING)
+	private TicketType type;
 	@ManyToOne
 	@JoinColumn(name = "purchase_id", nullable = false)
 	private Purchase purchase;
@@ -34,8 +41,9 @@ public class PurchaseItem {
 	PurchaseItem() {
 	}
 
-	public PurchaseItem(BigDecimal price, Purchase purchase) {
+	public PurchaseItem(BigDecimal price, TicketType type, Purchase purchase) {
 		this.price = price;
+		this.type = type;
 		this.purchase = purchase;
 	}
 
@@ -73,6 +81,10 @@ public class PurchaseItem {
 
 	public LocalDateTime getScheduledDate() {
 		return purchase.getScheduledDate();
+	}
+	
+	public TicketType getType() {
+		return type;
 	}
 
 }

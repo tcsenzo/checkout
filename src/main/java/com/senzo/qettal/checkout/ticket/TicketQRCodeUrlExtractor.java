@@ -1,4 +1,4 @@
-package com.senzo.qettal.checkout.tickets;
+package com.senzo.qettal.checkout.ticket;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

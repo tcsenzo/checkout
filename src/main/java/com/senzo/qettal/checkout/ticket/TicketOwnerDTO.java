@@ -1,4 +1,4 @@
-package com.senzo.qettal.checkout.tickets;
+package com.senzo.qettal.checkout.ticket;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

@@ -20,7 +20,7 @@ import com.senzo.qettal.checkout.moip.MoipApiWrapper;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.Purchases;
 import com.senzo.qettal.checkout.security.LoggedUser;
-import com.senzo.qettal.checkout.tickets.TicketFactory;
+import com.senzo.qettal.checkout.ticket.TicketFactory;
 
 @RestController
 @RequestMapping("/payments")

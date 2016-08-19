@@ -1,4 +1,4 @@
-package com.senzo.qettal.checkout.tickets;
+package com.senzo.qettal.checkout.ticket;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

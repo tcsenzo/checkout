@@ -12,7 +12,7 @@ public class PurchaseItemConverter {
 	public Stream<PurchaseItem> convert(PurchaseItemDTO purchaseItemDTO, PurchaseEventDTO event, Purchase purchase) {
 		Long quantity = purchaseItemDTO.getQuantity();
 		return rangeClosed(1l, quantity)
-        		.mapToObj(i -> new PurchaseItem(event.getPrice(), purchase));
+        		.mapToObj(i -> new PurchaseItem(event.getPrice(), purchaseItemDTO.getType(), purchase));
 	}
 	
 }

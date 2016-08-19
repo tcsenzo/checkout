@@ -1,5 +1,6 @@
 package com.senzo.qettal.checkout.purchase;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.senzo.qettal.checkout.users.User;
 
 @Component
 public class PurchaseDAO implements Purchases {
@@ -35,8 +38,8 @@ public class PurchaseDAO implements Purchases {
 
 	@Override
 	public Optional<Purchase> findByUniqueId(String purchaseUniqueId) {
-		String hql = "from " + Purchase.class.getSimpleName() + " p where p.uniqueId = :uniqueId";
 		try{
+			String hql = "from " + Purchase.class.getSimpleName() + " p where p.uniqueId = :uniqueId";
 			Purchase purchase = em.createQuery(hql, Purchase.class)
 					.setParameter("uniqueId", purchaseUniqueId)
 					.getSingleResult();
@@ -44,6 +47,14 @@ public class PurchaseDAO implements Purchases {
 		} catch(NoResultException e) {
 			return Optional.empty();
 		}
+	}
+
+	@Override
+	public List<Purchase> of(User user) {
+		String hql = "from " + Purchase.class.getSimpleName() + " p where p.owner = :owner";
+		return em.createQuery(hql, Purchase.class)
+				.setParameter("owner", user)
+				.getResultList();
 	}
 
 }

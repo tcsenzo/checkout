@@ -80,11 +80,11 @@ This will create a file with your cookies at /tmp/cookies.txt, you will need to 
 	"items": [
 		{
 			"quantity": 2,
-			"type": "HALF" //Ignored for now
+			"ticket_type": "HALF" //Ignored for now
 		},
 		{
 			"quantity": 3,
-			"type": "FULL"  //Ignored for now
+			"ticket_type": "FULL"  //Ignored for now
 		}
 	]
 }
@@ -93,7 +93,7 @@ This will create a file with your cookies at /tmp/cookies.txt, you will need to 
 Example:
 
 ```bash
-curl -b /tmp/cookies.txt -H "Content-Type:application/json" -X POST http://localhost:8082/purchases --data "{\"event_id\": 1, \"items\": [{ \"quantity\": 2, \"type\": \"HALF\"}, { \"quantity\": 3, \"type\": \"FULL\"}]}"
+curl -b /tmp/cookies.txt -H "Content-Type:application/json" -X POST http://localhost:8082/purchases --data "{\"event_id\": 1, \"items\": [{ \"quantity\": 2, \"ticket_type\": \"HALF\"}, { \"quantity\": 3, \"ticket_type\": \"FULL\"}]}"
 ```
 
 Possible responses:

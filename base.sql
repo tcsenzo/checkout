@@ -36,6 +36,7 @@ create table `purchase_item` (
 	id bigint(20) not null primary key auto_increment,
 	purchase_id bigint(20) not null,
 	price varchar(30) not null,
+	ticket_type varchar(255) not null,
 	created_at datetime not null,
 	CONSTRAINT item_purchase_id_fk FOREIGN KEY (purchase_id) REFERENCES `purchase`(id)
 );
