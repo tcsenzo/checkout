@@ -7,6 +7,15 @@
 mysql -u root checkout < base.sql
 ``` 
 
+- Copy the application.properties.sample:
+
+```bash
+cp src/main/resources/application.properties.sample src/main/resources/application.properties
+```
+
+- Set the amazon properties
+
+
 ## How to run
 
 - If you have the project imported, just run the class com.senzo.qettal.checkout.CheckoutApplication
