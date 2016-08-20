@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.senzo.qettal.checkout.address.Address;
+import com.senzo.qettal.checkout.ticket.TicketType;
 
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,6 +20,8 @@ public class PurchaseEventDTO {
 	private String description;
 	@JsonProperty
 	private BigDecimal price;
+	@JsonProperty("half_price")
+	private BigDecimal halfPrice;
 	@JsonProperty(value = "scheduled_date", required = true)
 	private LocalDateTime scheduledDate;
 	@JsonProperty(required = true)
@@ -42,10 +45,6 @@ public class PurchaseEventDTO {
 		return description;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
-
 	public String getTheaterName() {
 		return theater.getName();
 	}
@@ -56,6 +55,12 @@ public class PurchaseEventDTO {
 	
 	public LocalDateTime getScheduledDate() {
 		return scheduledDate;
+	}
+
+	public BigDecimal getPriceFor(TicketType type) {
+		if(type.equals(TicketType.HALF))
+			return halfPrice;
+		return price;
 	}
 	
 }

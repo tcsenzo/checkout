@@ -3,6 +3,8 @@ package com.senzo.qettal.checkout.users;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,15 @@ public class UserDAO implements Users {
 	}
 
 	@Override
-	public Optional<User> findByEmail(String email) {
-		return Optional.ofNullable(em.createQuery("from User where email = :email", User.class)
-			.setParameter("email", email)
-			.getSingleResult());
+	public Optional<User> findByAuthId(String email, String authId) {
+		try{
+			return Optional.of(em.createQuery("from User where email = :email and authId = :authId", User.class)
+					.setParameter("email", email)
+					.setParameter("authId", authId)
+					.getSingleResult());
+		} catch (NonUniqueResultException | NoResultException e){
+			return Optional.empty();
+		}
 	}
 
 }

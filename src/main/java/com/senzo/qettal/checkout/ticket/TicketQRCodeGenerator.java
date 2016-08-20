@@ -1,6 +1,7 @@
 package com.senzo.qettal.checkout.ticket;
 
 import static java.lang.System.currentTimeMillis;
+import static org.apache.commons.codec.binary.Hex.encodeHexString;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -14,8 +15,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 
 import com.google.zxing.BarcodeFormat;
@@ -70,9 +71,11 @@ public class TicketQRCodeGenerator {
 	
 	private String hash(PurchaseItem item) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		String key = item.getPurchaseUniqueId() + item.getId() + currentTimeMillis() + SALT;
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		MessageDigest md = DigestUtils.getSha256Digest();
 		md.update(key.getBytes("UTF-8"));
-		String hashedTicketName = new String(Hex.encode(md.digest()));
+		String hashedTicketName = encodeHexString(md.digest());
 		return hashedTicketName;
 	}
+	
+
 }

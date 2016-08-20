@@ -2,7 +2,6 @@ package com.senzo.qettal.checkout.users;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,15 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
-	private String password;
-	@Column(name="created_at")
+	@Column(name = "auth_id")
+	private String authId;
+	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 	/**
@@ -28,31 +28,23 @@ public class User {
 	 */
 	User() {
 	}
-	
-	public User(String name, String email, String password) {
+
+	public User(String name, String email, String authId) {
 		this.name = name;
 		this.email = email;
-		this.password = password;
+		this.authId = authId;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
-	public String getPassword() {
-		return password;
+
+	public String getName() {
+		return name;
 	}
 
 	public Long getId() {
 		return id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public Optional<User> save(Users users) {
-		return Optional.of(users.save(this));
 	}
 
 	@Override
@@ -71,6 +63,4 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(this.id, other.id);
 	}
-	
-	
 }

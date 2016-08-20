@@ -5,5 +5,5 @@ import java.util.Optional;
 
 public interface Users {
 	User save(User user);
-	Optional<User> findByEmail(String email);
+	Optional<User> findByAuthId(String email, String authId);
 }

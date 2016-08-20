@@ -25,46 +25,9 @@ cp src/main/resources/application.properties.sample src/main/resources/applicati
 
  If you don't have an application to test with, use curl sending a json with the structure provided bellow:
 
-
-## User
-
-### How to create one
-
-- Json template:
-
-```json
-{
-	"name": "Leonardo",
-	"email": "leo@leo.com",
-	"password": "123"
-}
-```
-
-Example: 
-
-```bash
- curl -H "Content-Type:application/json" -X POST http://localhost:8082/users --data "{\"name\": \"Leonardo\", \"email\": \"leo@leo.com\", \"password\": \"123\"}"
-```
-
-Possible responses:
-
-- 202 - User created
-- 400 - Invalid or insufficient data
-
-
 ## Login
 
-After you create an user, you have to log in to be able to access any other resources
-
-## How to
-
-Example:
-
-```bash
-curl -X POST -c /tmp/cookies.txt  http://localhost:8082/login -d email=leo@leo.com -d password=123
-```
-
-This will create a file with your cookies at /tmp/cookies.txt, you will need to send this file in each request to prove you are authenticated
+See: https://github.com/tcsenzo/authentication/blob/master/README.md 
 
 **All endpoints marked with (REQUIRES LOGIN) bellow will return 401 if you are not logged in**
 
@@ -80,11 +43,11 @@ This will create a file with your cookies at /tmp/cookies.txt, you will need to 
 	"items": [
 		{
 			"quantity": 2,
-			"ticket_type": "HALF" //Ignored for now
+			"ticket_type": "HALF" 
 		},
 		{
 			"quantity": 3,
-			"ticket_type": "FULL"  //Ignored for now
+			"ticket_type": "FULL"
 		}
 	]
 }

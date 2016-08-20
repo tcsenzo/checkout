@@ -5,7 +5,7 @@ create table `user` (
 	id bigint(20) not null primary key auto_increment,
 	name varchar(255) not null,
 	email varchar(255) not null,
-	password varchar(255) not null,
+	auth_id varchar(255) not null,
 	created_at datetime not null
 );
 
