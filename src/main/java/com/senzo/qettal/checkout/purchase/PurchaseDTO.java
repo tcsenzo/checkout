@@ -20,19 +20,23 @@ public class PurchaseDTO {
 	@JsonProperty("event_id")
 	private Long eventId;
 	
+	@JsonProperty("id")
+	private Long id;
+	
 	/**
 	 * @deprecated Jackson eyes only
 	 */
 	PurchaseDTO() {
 	}	
 	
-	public PurchaseDTO(List<PurchaseItemDTO> items, Long eventId) {
+	public PurchaseDTO(List<PurchaseItemDTO> items, Long eventId, Long id) {
 		this.items = items;
 		this.eventId = eventId;
+		this.id = id;
 	}
 
-	public PurchaseDTO(List<PurchaseItemDTO> items) {
-		this(items, null);
+	public PurchaseDTO(List<PurchaseItemDTO> items, Long id) {
+		this(items, null, id);
 	}
 
 	public Long getEventId() {

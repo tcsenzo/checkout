@@ -24,13 +24,16 @@ public class PurchaseController {
 	private PurchaseFactory purchaseFactory;
 	@Autowired
 	private LoggedUser loggedUser;
-
+	@Autowired
+	private PurchaseConverter converter;
+	
 	@RequestMapping(method = POST)
-	public ResponseEntity<String> create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
+	public ResponseEntity<PurchaseDTO> create(@Valid @RequestBody PurchaseDTO purchaseDTO) {
 		Optional<Purchase> optionalPurchase = purchaseFactory.create(purchaseDTO);
 		if(!optionalPurchase.isPresent()){
 			return new ResponseEntity<>(CONFLICT);
 		}
-		return new ResponseEntity<>(CREATED);
+		
+		return new ResponseEntity<>(converter.convert(optionalPurchase.get()), CREATED);
 	}
 }

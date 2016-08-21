@@ -20,6 +20,6 @@ public class PurchaseConverter {
 				.map(e -> new PurchaseItemDTO(Long.valueOf(e.getValue().size()), e.getKey()))
 				.collect(Collectors.toList());
 		
-		return new PurchaseDTO(items);
+		return new PurchaseDTO(items, purchase.getId());
 	}
 }
