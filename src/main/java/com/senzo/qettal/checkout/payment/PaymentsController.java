@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.senzo.qettal.checkout.moip.MoipApiWrapper;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.Purchases;
+import com.senzo.qettal.checkout.security.AllowUnloggedUsers;
 import com.senzo.qettal.checkout.security.LoggedUser;
 import com.senzo.qettal.checkout.ticket.TicketFactory;
 
@@ -55,6 +56,7 @@ public class PaymentsController {
 	}
 	
 	@RequestMapping(path="/moip/callback", method = POST)
+	@AllowUnloggedUsers
 	public ResponseEntity<String> updateStatus(@RequestParam("id_transacao") String purchaseUniqueId, @RequestParam("status_pagamento") Integer paymentStatus) {
 		Optional<Purchase> optionalPurchase = purchases.findByUniqueId(purchaseUniqueId);
 		if(!optionalPurchase.isPresent()){
