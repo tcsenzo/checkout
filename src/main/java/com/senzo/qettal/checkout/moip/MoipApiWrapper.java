@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.moip.API;
+import br.com.moip.exception.ValidationException;
 import br.com.moip.request.CreditCardRequest;
 import br.com.moip.request.CustomerRequest;
 import br.com.moip.request.FundingInstrumentRequest;
@@ -34,47 +35,49 @@ public class MoipApiWrapper {
 	private API api;
 
 	public Order order(Purchase purchase) {
-		OrderRequest orderRequest = new OrderRequest().ownId(purchase.getId().toString());
+		try {
+			OrderRequest orderRequest = new OrderRequest().ownId(purchase.getId().toString());
 
-		DecimalFormat df = new DecimalFormat();
-		df.setMaximumFractionDigits(2);
-		df.setMinimumFractionDigits(2);
+			DecimalFormat df = new DecimalFormat();
+			df.setMaximumFractionDigits(2);
+			df.setMinimumFractionDigits(2);
 
-		List<PurchaseItem> items = purchase.getItems();
-		for (PurchaseItem purchaseItem : items) {
-			orderRequest.addItem(purchase.getEventName(), 1,
-					purchase.getEventDescription(),
-					Integer.valueOf(df.format(purchaseItem.getPrice()).replace(".", "")));
+			List<PurchaseItem> items = purchase.getItems();
+			for (PurchaseItem purchaseItem : items) {
+				orderRequest.addItem(purchase.getEventName(), 1, purchase.getEventDescription(),
+						Integer.valueOf(df.format(purchaseItem.getPrice()).replace(".", "")));
+			}
+
+			User user = loggedUser.getUser().get();
+
+			orderRequest.customer(new CustomerRequest().ownId(user.getId().toString()).fullname(user.getName())
+					.email(user.getEmail()));
+
+			return api.order().create(orderRequest);
+		} catch (ValidationException e) {
+			throw new RuntimeException("Moip threw an exception: " + e.getErrors(), e);
 		}
-
-		User user = loggedUser.getUser().get();
-
-		orderRequest.customer(new CustomerRequest().ownId(user.getId().toString()).fullname(user.getName())
-				.email(user.getEmail()));
-
-		return api.order().create(orderRequest);
 	}
 
 	public Payment pay(PaymentDTO paymentDTO, String referenceId) {
-		HolderRequest holderRequest = new HolderRequest()
-		        .fullname(paymentDTO.getFullName())
-		        .birthdate(paymentDTO.getBirthDate())
-		        .phone(new PhoneRequest()
-		                        .setAreaCode(paymentDTO.getPhoneAreaCode())
-		                        .setNumber(paymentDTO.getPhone()))
-		        .taxDocument(TaxDocumentRequest.cpf(paymentDTO.getCpf()));
-		
-		CreditCardRequest creditCardRequest = new CreditCardRequest()
-		        .hash(paymentDTO.getCreditCardHash())
-		        .holder(holderRequest);
-		
-		PaymentRequest paymentRequest = new PaymentRequest()
-		        .orderId(referenceId)
-		        .installmentCount(1)
-		        .fundingInstrument(new FundingInstrumentRequest().creditCard(creditCardRequest));
-		
-		Payment payment = api.payment().create(paymentRequest);
-		return payment;
+		try {
+			HolderRequest holderRequest = new HolderRequest()
+					.fullname(paymentDTO.getFullName())
+					.birthdate(paymentDTO.getBirthDate())
+					.phone(new PhoneRequest().setAreaCode(paymentDTO.getPhoneAreaCode()).setNumber(
+							paymentDTO.getPhone())).taxDocument(TaxDocumentRequest.cpf(paymentDTO.getCpf()));
+
+			CreditCardRequest creditCardRequest = new CreditCardRequest().hash(paymentDTO.getCreditCardHash()).holder(
+					holderRequest);
+
+			PaymentRequest paymentRequest = new PaymentRequest().orderId(referenceId).installmentCount(1)
+					.fundingInstrument(new FundingInstrumentRequest().creditCard(creditCardRequest));
+
+			Payment payment = api.payment().create(paymentRequest);
+			return payment;
+		} catch (ValidationException e) {
+			throw new RuntimeException("Moip threw an exception: " + e.getErrors(), e);
+		}
 	}
 
 }

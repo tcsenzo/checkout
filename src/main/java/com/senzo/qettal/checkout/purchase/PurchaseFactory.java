@@ -6,6 +6,8 @@ import static org.springframework.http.HttpMethod.PUT;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -34,7 +36,8 @@ public class PurchaseFactory {
 	private MoipApiWrapper moip;
 	@Autowired
 	private Purchases purchases;
-	
+
+	@Transactional
 	public Optional<Purchase> create(PurchaseDTO purchaseDTO) {
 		try{
 			Long totalQuantity = purchaseDTO.getTotalQuantity();
