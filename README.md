@@ -154,5 +154,55 @@ The response will be a json in as the one bellow:
         "name": "Leonardo"
     }
 }
+```
 
+## History
+
+### How to get your previous purhcases (REQUIRES LOGIN)
+
+
+Example
+
+```
+curl -b /tmp/cookies.txt http://localhost:8082/history
+```
+
+The response will be a json in as the one bellow:
+
+```json
+[{
+	"id": 1,
+	"tickets": [{
+		"qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/ac01898a7648c27eb849708fb8dc03e184b971f698bc639e3414e19607226590.png",
+		"type": "HALF",
+		"paid_price": 11.0
+	}, {
+		"qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/3c1dfae608e1cc545d74b352845253d8efc4bbbce4f2b0a8a6f91062dde81559.png",
+		"type": "HALF",
+		"paid_price": 11.0
+	}, {
+		"qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/e9aaebe256431708c6a9c9f4c3f1bb3d1652a8671a27aaa284d395c3e3039e64.png",
+		"type": "FULL",
+		"paid_price": 22.0
+	}, {
+		"qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/d93059227c00e205b3f5bb4eb8b1f9d760fd7d17b57ab710515f9d9855026b65.png",
+		"type": "FULL",
+		"paid_price": 22.0
+	}, {
+		"qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/ef110b8af3eed078cc15fed3da8e5e1536f58150f33977c5a6471b463f4333a9.png",
+		"type": "FULL",
+		"paid_price": 22.0
+	}],
+	"event": {
+		"name": "Evento maroto",
+		"scheduled_date": "2017-12-03T10:15:30"
+	}
+}, {
+	"id": 2,
+	"tickets": [],
+	"event": {
+		"name": "Evento maroto",
+		"scheduled_date": "2017-12-03T10:15:30"
+	}
+}]
 ```
