@@ -24,6 +24,11 @@ public class PurchaseTheaterDTO {
 	PurchaseTheaterDTO() {
 	}
 	
+	public PurchaseTheaterDTO(String name, AddressDTO address) {
+		this.name = name;
+		this.address = address;
+	}
+
 	public String getName() {
 		return name;
 	}

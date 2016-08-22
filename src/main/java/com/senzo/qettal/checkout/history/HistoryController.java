@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.senzo.qettal.checkout.purchase.PurchaseConverter;
-import com.senzo.qettal.checkout.purchase.PurchaseDTO;
 import com.senzo.qettal.checkout.purchase.Purchases;
 import com.senzo.qettal.checkout.security.LoggedUser;
 
@@ -26,11 +24,11 @@ public class HistoryController {
 	@Autowired
 	private Purchases purchases;
 	@Autowired
-	private PurchaseConverter converter;
+	private PurchaseToHistoryConverter converter;
 	
 	@RequestMapping(method=GET)
-	public ResponseEntity<List<PurchaseDTO>> list(){
-		List<PurchaseDTO> purchaseList = purchases.of(loggedUser.getUser().get())
+	public ResponseEntity<List<PurchaseToHistoryDTO>> list(){
+		List<PurchaseToHistoryDTO> purchaseList = purchases.of(loggedUser.getUser().get())
 				.stream()
 				.map(converter::convert)
 				.collect(toList());

@@ -10,8 +10,10 @@ public class TicketDTO {
 
 	@JsonProperty("qrcode_url")
 	private String qrCodeUrl;
+	
 	@JsonProperty("event")
 	private TicketEventDTO event;
+	
 	@JsonProperty
 	private TicketOwnerDTO user;
 	

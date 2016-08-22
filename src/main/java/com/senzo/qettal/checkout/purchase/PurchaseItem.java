@@ -4,6 +4,7 @@ import static javax.persistence.EnumType.STRING;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.senzo.qettal.checkout.address.Address;
+import com.senzo.qettal.checkout.ticket.Ticket;
 import com.senzo.qettal.checkout.ticket.TicketType;
 
 @Entity
@@ -29,6 +32,8 @@ public class PurchaseItem {
 	@Column(name="ticket_type")
 	@Enumerated(STRING)
 	private TicketType type;
+	@OneToOne(mappedBy="purchaseItem")
+	private Ticket ticket;
 	@ManyToOne
 	@JoinColumn(name = "purchase_id", nullable = false)
 	private Purchase purchase;
@@ -87,4 +92,11 @@ public class PurchaseItem {
 		return type;
 	}
 
+	public Optional<Ticket> getTicket() {
+		return Optional.ofNullable(ticket);
+	}
+	
+	public boolean hasTicket(){
+		return ticket != null;
+	}
 }
