@@ -52,7 +52,7 @@ public class Purchase {
 	@Column(name = "reference_id")
 	private String referenceId;
 	@OneToMany(mappedBy="purchase", fetch=FetchType.EAGER)
-	private List<Payment> payment;
+	private List<Payment> payment = new ArrayList<>();
 	@Column(name = "unique_id")
 	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name = "created_at")
@@ -99,6 +99,9 @@ public class Purchase {
 	}
 
 	public Optional<Payment> getPayment() {
+		if(payment.isEmpty()){
+			return Optional.empty();
+		}
 		return Optional.ofNullable(payment.get(0));
 	}
 

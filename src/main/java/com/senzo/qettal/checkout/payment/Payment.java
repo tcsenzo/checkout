@@ -64,4 +64,8 @@ public class Payment {
 		return lastStatus.isApproved();
 	}
 
+	public PaymentStatus getLastStatus() {
+		return lastStatus;
+	}
+
 }

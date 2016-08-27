@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.senzo.qettal.checkout.payment.PaymentStatus;
 
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,6 +23,9 @@ public class PurchaseToHistoryDTO {
 	@JsonProperty("event")
 	private EventToHistoryDTO event;
 	
+	@JsonProperty("payment_status")
+	private PaymentStatus paymentStatus;
+	
 	
 	/**
 	 * @deprecated Jackson eyes only
@@ -33,6 +37,11 @@ public class PurchaseToHistoryDTO {
 		this.id = id;
 		this.items = items;
 		this.event = event;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+		
 	}
 	
 	

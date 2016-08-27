@@ -9,11 +9,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventToHistoryDTO {
+	
 	@JsonProperty
 	private String name;
+	
 	@JsonProperty(value = "scheduled_date", required = true)
 	private LocalDateTime scheduledDate;
-	
+
 	/**
 	 * @deprecated Jackson eyes only
 	 */
@@ -24,5 +26,5 @@ public class EventToHistoryDTO {
 		this.name = name;
 		this.scheduledDate = scheduledDate;
 	}
-	
+
 }
