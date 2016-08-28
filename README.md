@@ -172,17 +172,43 @@ The response will be a json in as the one bellow:
 ```json
 [
     {
+        "date": "2016-08-20T22:48:03",
         "event": {
             "name": "Evento maroto",
-            "scheduled_date": "2017-12-03T10:15:30"
+            "scheduled_date": "2017-12-03T10:15:30",
+            "theater": {
+                "address": {
+                    "city": "S\u00e3o Paulo",
+                    "country": "Brasil",
+                    "district": "Vila Olimpia",
+                    "number": "360",
+                    "state": "SP",
+                    "street": "Rua Olimp\u00edadas",
+                    "zip_code": "04551-000"
+                },
+                "name": "Teatro NET SP"
+            }
         },
         "id": 2,
         "tickets": []
     },
     {
+        "date": "2016-08-20T20:52:19",
         "event": {
             "name": "Evento maroto",
-            "scheduled_date": "2017-12-03T10:15:30"
+            "scheduled_date": "2017-12-03T10:15:30",
+            "theater": {
+                "address": {
+                    "city": "S\u00e3o Paulo",
+                    "country": "Brasil",
+                    "district": "Vila Olimpia",
+                    "number": "360",
+                    "state": "SP",
+                    "street": "Rua Olimp\u00edadas",
+                    "zip_code": "04551-000"
+                },
+                "name": "Teatro NET SP"
+            }
         },
         "id": 1,
         "payment_status": "APPROVED",

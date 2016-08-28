@@ -15,6 +15,9 @@ public class EventToHistoryDTO {
 	
 	@JsonProperty(value = "scheduled_date", required = true)
 	private LocalDateTime scheduledDate;
+	
+	@JsonProperty
+	private TheaterDTO theater;
 
 	/**
 	 * @deprecated Jackson eyes only
@@ -22,9 +25,10 @@ public class EventToHistoryDTO {
 	EventToHistoryDTO() {
 	}
 
-	public EventToHistoryDTO(String name, LocalDateTime scheduledDate) {
+	public EventToHistoryDTO(String name, LocalDateTime scheduledDate, TheaterDTO theater) {
 		this.name = name;
 		this.scheduledDate = scheduledDate;
+		this.theater = theater;
 	}
 
 }

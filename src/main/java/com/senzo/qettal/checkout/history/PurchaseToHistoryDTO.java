@@ -2,6 +2,7 @@ package com.senzo.qettal.checkout.history;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,6 +27,9 @@ public class PurchaseToHistoryDTO {
 	@JsonProperty("payment_status")
 	private PaymentStatus paymentStatus;
 	
+	@JsonProperty(value = "date", required = true)
+	private LocalDateTime date;
+	
 	
 	/**
 	 * @deprecated Jackson eyes only
@@ -33,8 +37,9 @@ public class PurchaseToHistoryDTO {
 	public PurchaseToHistoryDTO() {
 	}
 
-	public PurchaseToHistoryDTO(Long id, List<TicketsToHistoryDTO> items, EventToHistoryDTO event) {
+	public PurchaseToHistoryDTO(Long id, LocalDateTime date, List<TicketsToHistoryDTO> items, EventToHistoryDTO event) {
 		this.id = id;
+		this.date = date;
 		this.items = items;
 		this.event = event;
 	}

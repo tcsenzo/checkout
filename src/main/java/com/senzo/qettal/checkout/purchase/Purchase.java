@@ -140,4 +140,7 @@ public class Purchase {
 		return scheduledDate;
 	}
 
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 }

@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.senzo.qettal.checkout.address.AddressDTO;
 import com.senzo.qettal.checkout.payment.Payment;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.PurchaseItem;
@@ -26,9 +27,12 @@ public class PurchaseToHistoryConverter {
 					.map(i -> new TicketsToHistoryDTO(urlExtractor.extractFrom(i.getTicket().get()), i.getType(), i.getPrice()))
 					.collect(toList());
 		
-		EventToHistoryDTO event = new EventToHistoryDTO(purchase.getEventName(), purchase.getScheduledDate());
 		
-		PurchaseToHistoryDTO purchaseToHistoryDTO = new PurchaseToHistoryDTO(purchase.getId(), items, event);
+		AddressDTO address = AddressDTO.from(purchase.getTheaterAddress());
+		TheaterDTO theater = new TheaterDTO(purchase.getTheaterName(), address);
+		EventToHistoryDTO event = new EventToHistoryDTO(purchase.getEventName(), purchase.getScheduledDate(), theater);
+		
+		PurchaseToHistoryDTO purchaseToHistoryDTO = new PurchaseToHistoryDTO(purchase.getId(), purchase.getCreatedAt(), items, event);
 		Optional<Payment> optionalPayment = purchase.getPayment();
 		if(optionalPayment.isPresent()) {
 			purchaseToHistoryDTO.setPaymentStatus(optionalPayment.get().getLastStatus());
