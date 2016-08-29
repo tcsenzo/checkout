@@ -32,6 +32,9 @@ public class TicketsToHistoryDTO {
 		this.paidPrice = paidPrice;
 	}
 	
+	public BigDecimal getPaidPrice() {
+		return paidPrice;
+	}
 	
 	
 }
