@@ -20,4 +20,5 @@ public interface Purchases {
 	
 	List<Purchase> soldBy(Long theaterId);
 
+
 }

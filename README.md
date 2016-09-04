@@ -263,12 +263,81 @@ The response will be a json in as the one bellow:
 
 ```
 
-### How to get purchases of an specific theater
+### How to get details of a specific purchase (REQUIRES LOGIN)
+
+Example
+
+```bash
+curl -b /tmp/cookies.txt http://localhost:8082/history/1
+```
+
+Possible responses:
+
+- 200 - OK
+- 404 - Purchase not found
+- 403 - You don't have sufficient permission to see this purchase's information
+
+The success json will be as the one bellow:
+
+
+```json
+{
+    "date": "2016-08-20T20:52:19",
+    "event": {
+        "name": "Evento maroto",
+        "scheduled_date": "2017-12-03T10:15:30",
+        "theater": {
+            "address": {
+                "city": "S\u00e3o Paulo",
+                "country": "Brasil",
+                "district": "Vila Olimpia",
+                "number": "360",
+                "state": "SP",
+                "street": "Rua Olimp\u00edadas",
+                "zip_code": "04551-000"
+            },
+            "name": "Teatro NET SP"
+        }
+    },
+    "id": 1,
+    "payment_status": "APPROVED",
+    "tickets": [
+        {
+            "paid_price": 11.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/ac01898a7648c27eb849708fb8dc03e184b971f698bc639e3414e19607226590.png",
+            "type": "HALF"
+        },
+        {
+            "paid_price": 11.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/3c1dfae608e1cc545d74b352845253d8efc4bbbce4f2b0a8a6f91062dde81559.png",
+            "type": "HALF"
+        },
+        {
+            "paid_price": 22.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/e9aaebe256431708c6a9c9f4c3f1bb3d1652a8671a27aaa284d395c3e3039e64.png",
+            "type": "FULL"
+        },
+        {
+            "paid_price": 22.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/d93059227c00e205b3f5bb4eb8b1f9d760fd7d17b57ab710515f9d9855026b65.png",
+            "type": "FULL"
+        },
+        {
+            "paid_price": 22.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/ef110b8af3eed078cc15fed3da8e5e1536f58150f33977c5a6471b463f4333a9.png",
+            "type": "FULL"
+        }
+    ]
+}
+```
+
+### How to get purchases of a specific theater (REQUIRES LOGIN)
+(doesn't include the tickets information)
 
 
 Example
 
-```
+```bash
 curl -b /tmp/cookies.txt http://localhost:8082/theaters/1/history
 ```
 
@@ -313,4 +382,72 @@ The response will be a json in as the one bellow:
 ]
 
 
+```
+
+### How to get details of a specific purchase of a specific theater (REQUIRES LOGIN)
+(doesn't include the tickets information)
+
+Example
+
+```bash
+curl -b /tmp/cookies.txt http://localhost:8082/theater/1/history/1
+```
+
+Possible responses:
+
+- 200 - OK
+- 404 - Purchase not found for the specified theater
+
+The success json will be as the one bellow:
+
+
+```json
+{
+    "date": "2016-08-20T20:52:19",
+    "event": {
+        "name": "Evento maroto",
+        "scheduled_date": "2017-12-03T10:15:30",
+        "theater": {
+            "address": {
+                "city": "S\u00e3o Paulo",
+                "country": "Brasil",
+                "district": "Vila Olimpia",
+                "number": "360",
+                "state": "SP",
+                "street": "Rua Olimp\u00edadas",
+                "zip_code": "04551-000"
+            },
+            "name": "Teatro NET SP"
+        }
+    },
+    "id": 1,
+    "payment_status": "APPROVED",
+    "tickets": [
+        {
+            "paid_price": 11.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/ac01898a7648c27eb849708fb8dc03e184b971f698bc639e3414e19607226590.png",
+            "type": "HALF"
+        },
+        {
+            "paid_price": 11.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/3c1dfae608e1cc545d74b352845253d8efc4bbbce4f2b0a8a6f91062dde81559.png",
+            "type": "HALF"
+        },
+        {
+            "paid_price": 22.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/e9aaebe256431708c6a9c9f4c3f1bb3d1652a8671a27aaa284d395c3e3039e64.png",
+            "type": "FULL"
+        },
+        {
+            "paid_price": 22.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/d93059227c00e205b3f5bb4eb8b1f9d760fd7d17b57ab710515f9d9855026b65.png",
+            "type": "FULL"
+        },
+        {
+            "paid_price": 22.0,
+            "qrcode_url": "http://dev.qettal.tickets.s3.amazonaws.com/ef110b8af3eed078cc15fed3da8e5e1536f58150f33977c5a6471b463f4333a9.png",
+            "type": "FULL"
+        }
+    ]
+}
 ```
