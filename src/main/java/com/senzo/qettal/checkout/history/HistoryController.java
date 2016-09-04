@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,6 @@ import com.senzo.qettal.checkout.security.LoggedUser;
 
 
 @RestController
-@RequestMapping("/history")
 public class HistoryController {
 
 	@Autowired
@@ -26,11 +26,21 @@ public class HistoryController {
 	@Autowired
 	private PurchaseToHistoryConverter converter;
 	
-	@RequestMapping(method=GET)
-	public ResponseEntity<List<PurchaseToHistoryDTO>> list(){
-		List<PurchaseToHistoryDTO> purchaseList = purchases.of(loggedUser.getUser().get())
+	@RequestMapping(path="/history", method=GET)
+	public ResponseEntity<List<PurchaseToHistoryDTO>> buyerHistory(){
+		List<PurchaseToHistoryDTO> purchaseList = purchases.boughtBy(loggedUser.getUser().get())
 				.stream()
 				.map(converter::convert)
+				.collect(toList());
+		
+		return new ResponseEntity<>(purchaseList, OK);
+	}
+	
+	@RequestMapping(path="/theaters/{theaterId}/history", method=GET)
+	public ResponseEntity<List<TheaterPurchaseToHistoryDTO>> sellerHistory(@PathVariable("theaterId") Long theaterId){
+		List<TheaterPurchaseToHistoryDTO> purchaseList = purchases.soldBy(theaterId)
+				.stream()
+				.map(converter::convertForTheater)
 				.collect(toList());
 		
 		return new ResponseEntity<>(purchaseList, OK);

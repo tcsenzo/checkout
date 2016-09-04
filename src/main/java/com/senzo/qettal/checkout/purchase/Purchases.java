@@ -16,6 +16,8 @@ public interface Purchases {
 
 	Optional<Purchase> findByUniqueId(String purchaseUniqueId);
 
-	List<Purchase> of(User user);
+	List<Purchase> boughtBy(User user);
+	
+	List<Purchase> soldBy(Long theaterId);
 
 }

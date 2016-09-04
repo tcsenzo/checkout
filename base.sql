@@ -16,6 +16,7 @@ create table `purchase` (
 	event_name varchar(255) not null,
 	event_description varchar(255) not null,
 	scheduled_date datetime not null,
+	theater_id bigint(20) not null,
 	theater_name varchar(255) not null,
 	street varchar(255) not null,
 	number varchar(255) not null,

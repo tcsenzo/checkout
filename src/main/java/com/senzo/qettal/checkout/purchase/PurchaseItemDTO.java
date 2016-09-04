@@ -1,5 +1,7 @@
 package com.senzo.qettal.checkout.purchase;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,6 +16,12 @@ public class PurchaseItemDTO {
 	
 	@JsonProperty("ticket_type")
 	private TicketType type;
+
+	@JsonProperty("unit_price")
+	private BigDecimal unitPrice;
+
+	@JsonProperty("total_price")
+	private BigDecimal totalPrice;
 	
 	/**
 	 * @deprecated Jackson eyes only	
@@ -21,9 +29,11 @@ public class PurchaseItemDTO {
 	PurchaseItemDTO() {
 	}
 	
-	public PurchaseItemDTO(Long quantity, TicketType type) {
+	public PurchaseItemDTO(Long quantity, TicketType type, BigDecimal unitPrice) {
 		this.quantity = quantity;
 		this.type = type;
+		this.unitPrice = unitPrice;
+		this.totalPrice = unitPrice.multiply(new BigDecimal(quantity));
 	}
 
 	public Long getQuantity() {

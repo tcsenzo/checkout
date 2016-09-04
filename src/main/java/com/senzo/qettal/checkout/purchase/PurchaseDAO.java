@@ -50,10 +50,18 @@ public class PurchaseDAO implements Purchases {
 	}
 
 	@Override
-	public List<Purchase> of(User user) {
+	public List<Purchase> boughtBy(User user) {
 		String hql = "from " + Purchase.class.getSimpleName() + " p where p.owner = :owner order by createdAt desc";
 		return em.createQuery(hql, Purchase.class)
 				.setParameter("owner", user)
+				.getResultList();
+	}
+
+	@Override
+	public List<Purchase> soldBy(Long theaterId) {
+		String hql = "from " + Purchase.class.getSimpleName() + " p where p.theaterId = :theaterId order by createdAt desc";
+		return em.createQuery(hql, Purchase.class)
+				.setParameter("theaterId", theaterId)
 				.getResultList();
 	}
 

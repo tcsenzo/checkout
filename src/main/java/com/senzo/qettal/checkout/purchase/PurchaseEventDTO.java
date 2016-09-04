@@ -62,5 +62,9 @@ public class PurchaseEventDTO {
 			return halfPrice;
 		return price;
 	}
+
+	public Long getTheaterId() {
+		return theater.getId();
+	}
 	
 }

@@ -65,6 +65,25 @@ Possible responses:
 - 400 - Invalid or insufficient data
 - 409 - Event not available
 
+The success json will be the following:
+```json
+{
+	"items": [{
+		"quantity": 2,
+		"ticket_type": "HALF",
+		"unit_price": 11.0,
+		"total_price": 22.0
+	}, {
+		"quantity": 3,
+		"ticket_type": "FULL",
+		"unit_price": 22.0,
+		"total_price": 66.0
+	}],
+	"totalQuantity": 5,
+	"id": 2
+}
+```
+
 ## Payments
 
 ### How to create one (REQUIRES LOGIN)
@@ -158,7 +177,7 @@ The response will be a json in as the one bellow:
 
 ## History
 
-### How to get your previous purhcases (REQUIRES LOGIN)
+### How to get your previous purchases made by you (REQUIRES LOGIN)
 
 
 Example
@@ -241,5 +260,57 @@ The response will be a json in as the one bellow:
         ]
     }
 ]
+
+```
+
+### How to get purchases of an specific theater
+
+
+Example
+
+```
+curl -b /tmp/cookies.txt http://localhost:8082/theaters/1/history
+```
+
+The response will be a json in as the one bellow:
+
+```json
+[
+    {
+        "date": "2016-09-04T19:17:39",
+        "event": {
+            "name": "Evento maroto",
+            "scheduled_date": "2017-12-03T10:15:30",
+            "theater": {
+                "address": {
+                    "city": "S\u00e3o Paulo",
+                    "country": "Brasil",
+                    "district": "Vila Olimpia",
+                    "number": "360",
+                    "state": "SP",
+                    "street": "Rua Olimp\u00edadas",
+                    "zip_code": "04551-000"
+                },
+                "name": "Teatro NET SP"
+            }
+        },
+        "id": 2,
+        "items": [
+            {
+                "quantity": 2,
+                "ticket_type": "HALF",
+                "total_price": 22.0,
+                "unit_price": 11.0
+            },
+            {
+                "quantity": 3,
+                "ticket_type": "FULL",
+                "total_price": 66.0,
+                "unit_price": 22.0
+            }
+        ]
+    }
+]
+
 
 ```

@@ -45,7 +45,7 @@ public class PurchaseFactory {
 			ResponseEntity<PurchaseEventDTO> response = new RestTemplate().exchange(checkoutEventsUrl + "/" + purchaseDTO.getEventId(), PUT, new HttpEntity<CheckoutToEventDTO>(checkoutDto), PurchaseEventDTO.class);
 			PurchaseEventDTO event = response.getBody();
 			
-			Purchase purchase = new Purchase(loggedUser.getUser().get(), event.getName(), event.getDescription(), event.getScheduledDate(), event.getTheaterName(), event.getTheaterAddress());
+			Purchase purchase = new Purchase(loggedUser.getUser().get(), event.getName(), event.getDescription(), event.getScheduledDate(), event.getTheaterId(), event.getTheaterName(), event.getTheaterAddress());
 			List<PurchaseItem> items = purchaseDTO.getItems()
 					.stream()
 					.flatMap(dto -> itemConverter.convert(dto, event, purchase))

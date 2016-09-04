@@ -39,6 +39,8 @@ public class Purchase {
 	private User owner;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="purchase")	
 	private List<PurchaseItem> items = new ArrayList<>();
+	@Column(name = "theater_id")
+	private Long theaterId;
 	@Column(name = "theater_name")
 	private String theaterName;
 	@Embedded
@@ -64,12 +66,14 @@ public class Purchase {
 	Purchase() {
 	}
 
-	public Purchase(User owner, String eventName, String eventDescription, LocalDateTime scheduledDate, String theaterName, Address theaterAddress) {
+	public Purchase(User owner, String eventName, String eventDescription, LocalDateTime scheduledDate,
+			Long theaterId, String theaterName, Address theaterAddress) {
 		this.owner = owner;
 		this.eventName = eventName;
 		this.eventDescription = eventDescription;
 		this.scheduledDate = scheduledDate;
 		this.theaterName = theaterName;
+		this.theaterId = theaterId;
 		this.theaterAddress = theaterAddress;
 	}
 

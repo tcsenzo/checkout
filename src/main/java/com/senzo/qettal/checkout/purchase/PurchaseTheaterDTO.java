@@ -14,6 +14,8 @@ import com.senzo.qettal.checkout.address.AddressDTO;
 public class PurchaseTheaterDTO {
 
 	@JsonProperty
+	private Long id;
+	@JsonProperty
 	private String name;
 	@JsonProperty
 	private AddressDTO address;
@@ -35,6 +37,10 @@ public class PurchaseTheaterDTO {
 
 	public Address getAddress() {
 		return address.toModel();
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 }
