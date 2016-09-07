@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 	private LoggedUser loggedUser;
 	@Autowired
 	private Users users;
+	@Value("${url.authUsers}")
+	private String authUsersUrl;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
@@ -40,7 +43,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 			String headerName = "Cookie";
 			headers.set(headerName, req.getHeader(headerName));
 			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-			ResponseEntity<UserDTO> response = restTemplate.exchange("http://localhost:8083/users", HttpMethod.GET, entity, UserDTO.class);
+			ResponseEntity<UserDTO> response = restTemplate.exchange(authUsersUrl, HttpMethod.GET, entity, UserDTO.class);
 			UserDTO body = response.getBody();
 			loggedUser.setUser(
 					users.findByAuthId(body.getEmail(), body.getAuthId())

@@ -1,5 +1,4 @@
 aws.s3.bucket.tickets=dev.qettal.tickets
-url.ticket=http://localhost:4000/ticket
 
 cloud.aws.credentials.instanceProfile=false
 cloud.aws.credentials.accessKey=
@@ -18,4 +17,6 @@ spring.jackson.serialization.write_dates_as_timestamps=false
 
 server.port=8082
 
+url.ticket=http://localhost:4000/ticket
 url.checkoutEvents=http://localhost:8080/events/checkout
+url.authUsers=http://localhost:8083/users
