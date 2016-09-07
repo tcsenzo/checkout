@@ -1,0 +1,12 @@
+imagetag: leocwolter/checkout
+downloadpath: build
+s3:
+  bucket: prod.qettal.config
+  basepath: checkout
+files:
+  - s3path: application.properties
+    filename: application.properties
+    permission: 0644
+commands:
+  - mvn clean package
+  - cp target/checkout*.jar build/checkout.jar

@@ -1,4 +1,23 @@
-## How to setup
+## How to deploy
+
+### Locally
+- harbor
+
+### At ec2
+- If the mysql isnt running:
+
+```bash
+docker run --name mysql -e MYSQL_DATABASE=checkout -e MYSQL_ROOT_PASSWORD=<password> -v /mysql:/var/lib/mysql -d mysql/mysql-server --character-set-server=utf8 --collation-server=utf8_general_ci
+
+```
+
+- Run the checkout container linked with the mysql instance:
+
+```bash
+docker run --name checkout -p 8080:8080 --link mysql:mysql -d leocwolter/checkout
+```
+
+## How to setup locally
 
 - Import the project as an Existing Maven Project at eclipse
 - Import base.sql into your checkout database:
