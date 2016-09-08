@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class UserDAO implements Users {
 					.setParameter("email", email)
 					.setParameter("authId", authId)
 					.getSingleResult());
-		} catch (NonUniqueResultException | NoResultException e){
+		} catch (NoResultException e){
 			return Optional.empty();
 		}
 	}
