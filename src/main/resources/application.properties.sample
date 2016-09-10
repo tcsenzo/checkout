@@ -5,10 +5,11 @@ cloud.aws.credentials.accessKey=
 cloud.aws.credentials.secretKey=
 cloud.aws.region.static=us-east-1
 
-spring.datasource.url = jdbc:mysql://localhost/checkout
-spring.datasource.driverClassName = com.mysql.jdbc.Driver
-spring.datasource.username=root
-spring.datasource.password=
+qettal.datasource.jdbcUrl = jdbc:mysql://localhost/checkout
+qettal.datasource.driverClassName = com.mysql.jdbc.Driver
+qettal.datasource.username=root
+qettal.datasource.password=
+qettal.datasource.maximumPoolSize=20
 
 spring.jpa.open-in-view = false
 spring.jpa.show-sql = false 
