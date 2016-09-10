@@ -36,7 +36,7 @@ public class MoipApiWrapper {
 
 	public Order order(Purchase purchase) {
 		try {
-			OrderRequest orderRequest = new OrderRequest().ownId(purchase.getId().toString());
+			OrderRequest orderRequest = new OrderRequest().ownId(purchase.getUniqueId().toString());
 
 			DecimalFormat df = new DecimalFormat();
 			df.setMaximumFractionDigits(2);
