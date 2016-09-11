@@ -11,7 +11,20 @@ docker run --name mysql -e MYSQL_DATABASE=checkout -e MYSQL_ROOT_PASSWORD=<passw
 
 ```
 
-- Run the checkout container linked with the mysql instance:
+- Pull the new version 
+
+```bash
+docker pull leocwolter/checkout
+```
+
+- Stop and remove the running container
+
+```
+docker stop checkout
+docker rm checkout
+```
+
+- Run the container:
 
 ```bash
 docker run --name checkout -p 8080:8080 --link mysql:mysql -d leocwolter/checkout
