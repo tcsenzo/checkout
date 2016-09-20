@@ -151,4 +151,8 @@ public class Purchase {
 	public Long getTheaterId() {
 		return theaterId;
 	}
+
+	public User getOwner() {
+		return owner;
+	}
 }

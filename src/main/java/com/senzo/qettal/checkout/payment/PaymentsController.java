@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.senzo.qettal.checkout.email.EmailSender;
 import com.senzo.qettal.checkout.history.PurchaseToHistoryConverter;
-import com.senzo.qettal.checkout.history.PurchaseToHistoryDTO;
 import com.senzo.qettal.checkout.moip.MoipApiWrapper;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.Purchases;
@@ -75,13 +74,17 @@ public class PaymentsController {
 		if(!optionalPayment.isPresent()){
 			return new ResponseEntity<>(NOT_FOUND);
 		}
+		
 		Payment payment = optionalPayment.get();
+		if(payment.isApproved()){
+			return new ResponseEntity<>(OK);
+		}
+		
 		payment.updateStatus(PaymentStatus.equivalentToMoip(paymentStatus), payments);
 		
 		if(payment.isApproved()){
 			tickets.createFor(purchase);
-			PurchaseToHistoryDTO purchaseDTO = converter.convert(purchase);
-			sender.send(purchaseDTO);
+			sender.send(purchase);
 		}
 		
 		return new ResponseEntity<>(OK);

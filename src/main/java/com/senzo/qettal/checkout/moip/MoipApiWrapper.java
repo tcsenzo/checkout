@@ -50,7 +50,7 @@ public class MoipApiWrapper {
 
 			User user = loggedUser.getUser().get();
 
-			orderRequest.customer(new CustomerRequest().ownId(user.getId().toString()).fullname(user.getName())
+			orderRequest.customer(new CustomerRequest().ownId(user.getUniqueId().toString()).fullname(user.getName())
 					.email(user.getEmail()));
 
 			return api.order().create(orderRequest);

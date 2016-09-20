@@ -2,6 +2,7 @@ package com.senzo.qettal.checkout.users;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,8 @@ public class User {
 	private String email;
 	@Column(name = "auth_id")
 	private String authId;
+	@Column(name = "unique_id")
+	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -47,6 +50,10 @@ public class User {
 		return id;
 	}
 
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -63,4 +70,5 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(this.id, other.id);
 	}
+
 }
