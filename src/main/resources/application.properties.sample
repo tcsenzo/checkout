@@ -21,3 +21,16 @@ server.port=8082
 url.ticket=http://localhost:4000/ticket
 url.checkoutEvents=http://localhost:8080/events/checkout
 url.authUsers=http://localhost:8083/users
+
+spring.mail.protocol=smtp
+spring.mail.test-connection=false
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=qettal.senzo@gmail.com
+spring.mail.password=latteq123123
+spring.mail.default-encoding=UTF-8
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+
+spring.velocity.resource-loader-path=classpath:/email

@@ -29,5 +29,9 @@ public class TheaterDTO {
 		this.address = address;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 
 }

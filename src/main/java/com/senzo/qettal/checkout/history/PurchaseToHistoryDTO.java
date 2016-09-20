@@ -54,5 +54,20 @@ public class PurchaseToHistoryDTO {
 		
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	
+	public String getEventName(){
+		return event.getName();
+	}
+	
+	public String getTheaterName(){
+		return event.getTheaterName();
+	}
+	
+	public LocalDateTime getScheduledDate(){
+		return event.getScheduledDate();
+	}
 	
 }

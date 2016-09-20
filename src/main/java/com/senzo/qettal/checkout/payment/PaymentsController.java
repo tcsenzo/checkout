@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.senzo.qettal.checkout.email.EmailSender;
+import com.senzo.qettal.checkout.history.PurchaseToHistoryConverter;
+import com.senzo.qettal.checkout.history.PurchaseToHistoryDTO;
 import com.senzo.qettal.checkout.moip.MoipApiWrapper;
 import com.senzo.qettal.checkout.purchase.Purchase;
 import com.senzo.qettal.checkout.purchase.Purchases;
@@ -38,7 +41,11 @@ public class PaymentsController {
 	@Autowired
 	private Payments payments;
 	@Autowired
-	private TicketFactory tickets; 
+	private TicketFactory tickets;
+	@Autowired
+	private PurchaseToHistoryConverter converter;
+	@Autowired
+	private EmailSender sender;
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<String> create(@Valid @RequestBody PaymentDTO paymentDTO) {
@@ -73,6 +80,8 @@ public class PaymentsController {
 		
 		if(payment.isApproved()){
 			tickets.createFor(purchase);
+			PurchaseToHistoryDTO purchaseDTO = converter.convert(purchase);
+			sender.send(purchaseDTO);
 		}
 		
 		return new ResponseEntity<>(OK);

@@ -31,4 +31,16 @@ public class EventToHistoryDTO {
 		this.theater = theater;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public LocalDateTime getScheduledDate() {
+		return scheduledDate;
+	}
+
+	public String getTheaterName() {
+		return theater.getName();
+	}
+	
 }

@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <p>Olá, ${user.name}</p>
+
+        <div>
+        	<p>Os ingressos solicitados para o evento ${purchase.eventName} já estão disponíveis!</p>
+        	<p>O evento acontecerá no teatro ${purchase.theaterName} no dia ${purchase.scheduledDate}</p>
+        	<p>Você pode acessar as informações da sua compra clicando no link abaixo</p>
+			<p><a href="http://qettal.com/ticket/${purchase.id}">Adquira seu ingresso aqui</a></p>
+        </div>
+    </body>
+</html>
