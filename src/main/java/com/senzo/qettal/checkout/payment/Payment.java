@@ -1,6 +1,6 @@
 package com.senzo.qettal.checkout.payment;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class Payment {
 	@Column(name = "last_status", nullable = false)
 	private PaymentStatus lastStatus = PaymentStatus.STARTED;
 	@Column(name = "created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private Instant createdAt = Instant.now();
 	
 	/**
 	 * @deprecated Hibernate eyes only

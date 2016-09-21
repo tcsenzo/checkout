@@ -1,6 +1,6 @@
 package com.senzo.qettal.checkout.users;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,7 +24,7 @@ public class User {
 	@Column(name = "unique_id")
 	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name = "created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private Instant createdAt = Instant.now();
 
 	/**
 	 * @deprecated Hibernate eyes only

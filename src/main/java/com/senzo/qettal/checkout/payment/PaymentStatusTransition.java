@@ -1,6 +1,6 @@
 package com.senzo.qettal.checkout.payment;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class PaymentStatusTransition {
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
 	@Column(name = "created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private Instant createdAt = Instant.now();
 	
 	/**
 	 * @deprecated Hibernate eyes only

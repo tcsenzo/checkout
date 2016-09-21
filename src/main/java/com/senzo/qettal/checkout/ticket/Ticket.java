@@ -1,7 +1,7 @@
 package com.senzo.qettal.checkout.ticket;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ public class Ticket {
 	@JoinColumn(name = "purchase_item_id", nullable = false)
 	private PurchaseItem purchaseItem;
 	@Column(name = "created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private Instant createdAt = Instant.now();
 	private String hash;
 	
 	/**
@@ -65,7 +65,7 @@ public class Ticket {
 		return purchaseItem.getPrice();
 	}
 
-	public LocalDateTime getScheduledDate() {
+	public Instant getScheduledDate() {
 		return purchaseItem.getScheduledDate();
 	}
 

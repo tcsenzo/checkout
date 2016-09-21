@@ -1,6 +1,6 @@
 package com.senzo.qettal.checkout.purchase;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +50,7 @@ public class Purchase {
 	@Column(name = "event_description")
 	private String eventDescription;
 	@Column(name = "scheduled_date")
-	private LocalDateTime scheduledDate;
+	private Instant scheduledDate;
 	@Column(name = "reference_id")
 	private String referenceId;
 	@OneToMany(mappedBy="purchase", fetch=FetchType.EAGER)
@@ -58,7 +58,7 @@ public class Purchase {
 	@Column(name = "unique_id")
 	private String uniqueId = UUID.randomUUID().toString();
 	@Column(name = "created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private Instant createdAt = Instant.now();
 
 	/**
 	 * @deprecated Hibernate eyes only
@@ -66,7 +66,7 @@ public class Purchase {
 	Purchase() {
 	}
 
-	public Purchase(User owner, String eventName, String eventDescription, LocalDateTime scheduledDate,
+	public Purchase(User owner, String eventName, String eventDescription, Instant scheduledDate,
 			Long theaterId, String theaterName, Address theaterAddress) {
 		this.owner = owner;
 		this.eventName = eventName;
@@ -140,11 +140,11 @@ public class Purchase {
 		return theaterAddress;
 	}
 
-	public LocalDateTime getScheduledDate() {
+	public Instant getScheduledDate() {
 		return scheduledDate;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public Instant getCreatedAt() {
 		return createdAt;
 	}
 

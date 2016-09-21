@@ -1,7 +1,7 @@
 package com.senzo.qettal.checkout.purchase;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,7 +23,7 @@ public class PurchaseEventDTO {
 	@JsonProperty("half_price")
 	private BigDecimal halfPrice;
 	@JsonProperty(value = "scheduled_date", required = true)
-	private LocalDateTime scheduledDate;
+	private Instant scheduledDate;
 	@JsonProperty(required = true)
 	private PurchaseTheaterDTO theater;
 	
@@ -53,7 +53,7 @@ public class PurchaseEventDTO {
 		return theater.getAddress();
 	}
 	
-	public LocalDateTime getScheduledDate() {
+	public Instant getScheduledDate() {
 		return scheduledDate;
 	}
 

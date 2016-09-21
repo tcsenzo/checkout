@@ -3,7 +3,7 @@ package com.senzo.qettal.checkout.history;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,7 +30,7 @@ public class TheaterPurchaseToHistoryDTO {
 	private PaymentStatus paymentStatus;
 	
 	@JsonProperty(value = "date", required = true)
-	private LocalDateTime date;
+	private Instant date;
 	
 	@JsonProperty("total_price")
 	private BigDecimal totalPrice;
@@ -42,7 +42,7 @@ public class TheaterPurchaseToHistoryDTO {
 	public TheaterPurchaseToHistoryDTO() {
 	}
 
-	public TheaterPurchaseToHistoryDTO(Long id, LocalDateTime date, List<PurchaseItemDTO> items, EventToHistoryDTO event) {
+	public TheaterPurchaseToHistoryDTO(Long id, Instant date, List<PurchaseItemDTO> items, EventToHistoryDTO event) {
 		this.id = id;
 		this.date = date;
 		this.items = items;

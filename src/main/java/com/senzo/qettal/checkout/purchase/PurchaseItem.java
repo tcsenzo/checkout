@@ -3,7 +3,7 @@ package com.senzo.qettal.checkout.purchase;
 import static javax.persistence.EnumType.STRING;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class PurchaseItem {
 	@JoinColumn(name = "purchase_id", nullable = false)
 	private Purchase purchase;
 	@Column(name="created_at")
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private Instant createdAt = Instant.now();
 
 	/**
 	 * @deprecated Hibernate eyes only
@@ -84,7 +84,7 @@ public class PurchaseItem {
 		return purchase.getEventDescription();
 	}
 
-	public LocalDateTime getScheduledDate() {
+	public Instant getScheduledDate() {
 		return purchase.getScheduledDate();
 	}
 	

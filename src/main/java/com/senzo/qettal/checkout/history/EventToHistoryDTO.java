@@ -1,6 +1,6 @@
 package com.senzo.qettal.checkout.history;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +14,7 @@ public class EventToHistoryDTO {
 	private String name;
 	
 	@JsonProperty(value = "scheduled_date", required = true)
-	private LocalDateTime scheduledDate;
+	private Instant scheduledDate;
 	
 	@JsonProperty
 	private TheaterDTO theater;
@@ -25,7 +25,7 @@ public class EventToHistoryDTO {
 	EventToHistoryDTO() {
 	}
 
-	public EventToHistoryDTO(String name, LocalDateTime scheduledDate, TheaterDTO theater) {
+	public EventToHistoryDTO(String name, Instant scheduledDate, TheaterDTO theater) {
 		this.name = name;
 		this.scheduledDate = scheduledDate;
 		this.theater = theater;
@@ -35,7 +35,7 @@ public class EventToHistoryDTO {
 		return name;
 	}
 
-	public LocalDateTime getScheduledDate() {
+	public Instant getScheduledDate() {
 		return scheduledDate;
 	}
 
