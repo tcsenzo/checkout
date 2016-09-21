@@ -186,7 +186,7 @@ The response will be a json in as the one bellow:
     "event": {
         "name": "Evento maroto",
         "price": 22.0,
-        "scheduled_date": "2017-12-03T10:15:30",
+        "scheduled_date": "2017-12-03T10:15:30Z",
         "theater": {
             "address": {
                 "city": "S\u00e3o Paulo",
@@ -226,7 +226,7 @@ The response will be a json in as the one bellow:
         "date": "2016-08-20T22:48:03",
         "event": {
             "name": "Evento maroto",
-            "scheduled_date": "2017-12-03T10:15:30",
+            "scheduled_date": "2017-12-03T10:15:30Z",
             "theater": {
                 "address": {
                     "city": "S\u00e3o Paulo",
@@ -247,7 +247,7 @@ The response will be a json in as the one bellow:
         "date": "2016-08-20T20:52:19",
         "event": {
             "name": "Evento maroto",
-            "scheduled_date": "2017-12-03T10:15:30",
+            "scheduled_date": "2017-12-03T10:15:30Z",
             "theater": {
                 "address": {
                     "city": "S\u00e3o Paulo",
@@ -317,7 +317,7 @@ The success json will be as the one bellow:
     "date": "2016-08-20T20:52:19",
     "event": {
         "name": "Evento maroto",
-        "scheduled_date": "2017-12-03T10:15:30",
+        "scheduled_date": "2017-12-03T10:15:30Z",
         "theater": {
             "address": {
                 "city": "S\u00e3o Paulo",
@@ -381,7 +381,7 @@ The response will be a json in as the one bellow:
         "date": "2016-09-04T19:17:39",
         "event": {
             "name": "Evento maroto",
-            "scheduled_date": "2017-12-03T10:15:30",
+            "scheduled_date": "2017-12-03T10:15:30Z",
             "theater": {
                 "address": {
                     "city": "S\u00e3o Paulo",
@@ -438,7 +438,7 @@ The success json will be as the one bellow:
     "date": "2016-08-20T20:52:19",
     "event": {
         "name": "Evento maroto",
-        "scheduled_date": "2017-12-03T10:15:30",
+        "scheduled_date": "2017-12-03T10:15:30Z",
         "theater": {
             "address": {
                 "city": "S\u00e3o Paulo",
