@@ -1,4 +1,5 @@
 aws.s3.bucket.tickets=dev.qettal.tickets
+aws.s3.url=s3.amazonaws.com
 
 cloud.aws.credentials.instanceProfile=false
 cloud.aws.credentials.accessKey=
@@ -12,7 +13,7 @@ qettal.datasource.password=
 qettal.datasource.maximumPoolSize=20
 
 spring.jpa.open-in-view = false
-spring.jpa.show-sql = false 
+spring.jpa.show-sql = false
 
 spring.jackson.serialization.write_dates_as_timestamps=false
 
