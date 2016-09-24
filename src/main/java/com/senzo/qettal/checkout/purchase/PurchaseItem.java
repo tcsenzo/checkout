@@ -4,6 +4,7 @@ import static javax.persistence.EnumType.STRING;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.persistence.Column;
@@ -99,4 +100,23 @@ public class PurchaseItem {
 	public boolean hasTicket(){
 		return ticket != null;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PurchaseItem other = (PurchaseItem) obj;
+		return Objects.equals(id, other.id);
+	}
+	
+	
 }
