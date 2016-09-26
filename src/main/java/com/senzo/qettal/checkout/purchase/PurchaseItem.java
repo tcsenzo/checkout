@@ -103,7 +103,7 @@ public class PurchaseItem {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(id, ticket, type);
 	}
 
 	@Override
@@ -115,7 +115,9 @@ public class PurchaseItem {
 		if (getClass() != obj.getClass())
 			return false;
 		PurchaseItem other = (PurchaseItem) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(id, other.id)
+				&& Objects.equals(ticket, other.ticket)
+				&& Objects.equals(type, other.type);
 	}
 	
 	

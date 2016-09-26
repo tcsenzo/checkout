@@ -40,7 +40,7 @@ public class Purchase {
 	@JoinColumn(name = "owner_id")
 	private User owner;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="purchase")	
-	private Set<PurchaseItem> items = new HashSet<>();
+	private List<PurchaseItem> items = new ArrayList<>();
 	@Column(name = "theater_id")
 	private Long theaterId;
 	@Column(name = "theater_name")
@@ -84,7 +84,7 @@ public class Purchase {
 	}
 
 	public Set<PurchaseItem> getItems() {
-		return items;
+		return new HashSet<>(items);
 	}
 
 	public void addMoipInfo(Order createdOrder, Purchases purchases) {

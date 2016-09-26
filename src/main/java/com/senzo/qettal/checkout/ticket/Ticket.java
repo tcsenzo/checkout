@@ -2,6 +2,7 @@ package com.senzo.qettal.checkout.ticket;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,5 +73,25 @@ public class Ticket {
 	public String getHash() {
 		return hash;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, hash);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ticket other = (Ticket) obj;
+		return Objects.equals(id, other.id)
+				&& Objects.equals(hash, other.hash) ;
+	}
+	
+	
 
 }
