@@ -1,7 +1,7 @@
 package com.senzo.qettal.checkout.moip;
 
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ public class MoipApiWrapper {
 			df.setMaximumFractionDigits(2);
 			df.setMinimumFractionDigits(2);
 
-			List<PurchaseItem> items = purchase.getItems();
+			Set<PurchaseItem> items = purchase.getItems();
 			for (PurchaseItem purchaseItem : items) {
 				orderRequest.addItem(purchase.getEventName(), 1, purchase.getEventDescription(),
 						Integer.valueOf(df.format(purchaseItem.getPrice()).replace(".", "")));

@@ -3,8 +3,10 @@ package com.senzo.qettal.checkout.purchase;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -38,7 +40,7 @@ public class Purchase {
 	@JoinColumn(name = "owner_id")
 	private User owner;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="purchase")	
-	private List<PurchaseItem> items = new ArrayList<>();
+	private Set<PurchaseItem> items = new HashSet<>();
 	@Column(name = "theater_id")
 	private Long theaterId;
 	@Column(name = "theater_name")
@@ -81,7 +83,7 @@ public class Purchase {
 		return id;
 	}
 
-	public List<PurchaseItem> getItems() {
+	public Set<PurchaseItem> getItems() {
 		return items;
 	}
 
