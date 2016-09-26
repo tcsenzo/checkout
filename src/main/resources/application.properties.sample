@@ -19,7 +19,7 @@ spring.jackson.serialization.write_dates_as_timestamps=false
 
 server.port=8082
 
-url.ticket=http://localhost:4000/ticket
+url.ticket=http://localhost:4001/ticket
 url.checkoutEvents=http://localhost:8080/events/checkout
 url.authUsers=http://localhost:8083/users
 
