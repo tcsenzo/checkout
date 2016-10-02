@@ -19,6 +19,8 @@ public class PurchaseEventDTO {
 	@JsonProperty
 	private String description;
 	@JsonProperty
+	private String image;
+	@JsonProperty
 	private BigDecimal price;
 	@JsonProperty("half_price")
 	private BigDecimal halfPrice;
@@ -65,6 +67,10 @@ public class PurchaseEventDTO {
 
 	public Long getTheaterId() {
 		return theater.getId();
+	}
+
+	public String getImage() {
+		return image;
 	}
 	
 }

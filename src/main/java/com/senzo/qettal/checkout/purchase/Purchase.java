@@ -51,6 +51,8 @@ public class Purchase {
 	private String eventName;
 	@Column(name = "event_description")
 	private String eventDescription;
+	@Column(name = "event_image")
+	private String eventImage;
 	@Column(name = "scheduled_date")
 	private Instant scheduledDate;
 	@Column(name = "reference_id")
@@ -68,11 +70,12 @@ public class Purchase {
 	Purchase() {
 	}
 
-	public Purchase(User owner, String eventName, String eventDescription, Instant scheduledDate,
+	public Purchase(User owner, String eventName, String eventDescription, String eventImage, Instant scheduledDate,
 			Long theaterId, String theaterName, Address theaterAddress) {
 		this.owner = owner;
 		this.eventName = eventName;
 		this.eventDescription = eventDescription;
+		this.eventImage = eventImage;
 		this.scheduledDate = scheduledDate;
 		this.theaterName = theaterName;
 		this.theaterId = theaterId;
@@ -134,6 +137,10 @@ public class Purchase {
 		return eventDescription;
 	}
 
+	public String getEventImage() {
+		return eventImage;
+	}
+	
 	public String getTheaterName() {
 		return theaterName;
 	}

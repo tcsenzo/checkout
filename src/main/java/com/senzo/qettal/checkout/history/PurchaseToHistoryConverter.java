@@ -34,7 +34,7 @@ public class PurchaseToHistoryConverter {
 		
 		AddressDTO address = AddressDTO.from(purchase.getTheaterAddress());
 		TheaterDTO theater = new TheaterDTO(purchase.getTheaterName(), address);
-		EventToHistoryDTO event = new EventToHistoryDTO(purchase.getEventName(), purchase.getScheduledDate(), theater);
+		EventToHistoryDTO event = new EventToHistoryDTO(purchase.getEventName(), purchase.getEventImage(), purchase.getScheduledDate(), theater);
 		
 		PurchaseToHistoryDTO purchaseToHistoryDTO = new PurchaseToHistoryDTO(purchase.getId(), purchase.getCreatedAt(), items, event);
 		Optional<Payment> optionalPayment = purchase.getPayment();
@@ -47,7 +47,7 @@ public class PurchaseToHistoryConverter {
 	public TheaterPurchaseToHistoryDTO convertForTheater(Purchase purchase) {
 		AddressDTO address = AddressDTO.from(purchase.getTheaterAddress());
 		TheaterDTO theater = new TheaterDTO(purchase.getTheaterName(), address);
-		EventToHistoryDTO event = new EventToHistoryDTO(purchase.getEventName(), purchase.getScheduledDate(), theater);
+		EventToHistoryDTO event = new EventToHistoryDTO(purchase.getEventName(), purchase.getEventImage(), purchase.getScheduledDate(), theater);
 		
 		List<PurchaseItemDTO> items = itemConverter.convert(purchase);
 		TheaterPurchaseToHistoryDTO purchaseToHistoryDTO = new TheaterPurchaseToHistoryDTO(purchase.getId(), purchase.getCreatedAt(), items, event);

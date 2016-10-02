@@ -13,6 +13,9 @@ public class EventToHistoryDTO {
 	@JsonProperty
 	private String name;
 	
+	@JsonProperty
+	private String image;
+	
 	@JsonProperty(value = "scheduled_date", required = true)
 	private Instant scheduledDate;
 	
@@ -25,8 +28,9 @@ public class EventToHistoryDTO {
 	EventToHistoryDTO() {
 	}
 
-	public EventToHistoryDTO(String name, Instant scheduledDate, TheaterDTO theater) {
+	public EventToHistoryDTO(String name, String image, Instant scheduledDate, TheaterDTO theater) {
 		this.name = name;
+		this.image = image;
 		this.scheduledDate = scheduledDate;
 		this.theater = theater;
 	}
@@ -42,5 +46,5 @@ public class EventToHistoryDTO {
 	public String getTheaterName() {
 		return theater.getName();
 	}
-	
+		
 }
